@@ -125,7 +125,7 @@ cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
 
 APP_NAME = FractionDemo
-GUITest_OBJC_FILES = Fraction.m helloGCD_objc.m
+FractionDemo_OBJC_FILES = Fraction.m helloGCD_objc.m
 
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
