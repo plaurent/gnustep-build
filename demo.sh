@@ -119,22 +119,17 @@ echo "Compiling and running Grand Central Dispatch demo."
 clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -ldispatch -lgnustep-base  Fraction.m helloGCD_objc.m
 ./a.out
 
-
-echo "Compiling and running GUI demo (command line compilation)."
-clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
-./a.out
-
 # Using MAKEFILE
 
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
 
-APP_NAME = GUITest
-GUITest_OBJC_FILES = guitest.m
+APP_NAME = FractionDemo
+GUITest_OBJC_FILES = Fraction.m helloGCD_objc.m
 
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
 
-echo "Compiling and running GUI demo (makefile compilation)."
+echo "Compiling and running Fraction demo (makefile compilation)."
 make
-openapp ./GUITest.app
+openapp ./FractionDemo.app
