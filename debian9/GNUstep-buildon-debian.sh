@@ -1,0 +1,356 @@
+#!/bin/bash
+
+## Script to install the newest available version of GNUstep on Debian stable (stretch)
+## based on the script for Ubuntu, originating from http://wiki.gnustep.org/index.php/GNUstep_under_Ubuntu_Linux,
+## see master branch now.
+
+## Before executing this script make sure you have stretch-backports in your /etc/apt/sources.list:
+## deb http://deb.debian.org/debian stretch-backports main
+
+# Show prompt function
+function showPrompt()
+{
+  if [ "$PROMPT" = true ] ; then
+    echo -e "\n\n"
+    read -p "${GREEN}Press enter to continue...${NC}"
+  fi
+}
+
+function exportEnvVars()
+{
+  # Export compiler environment vars
+  export CC=clang-8
+  export CXX=clang++-8
+  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  export RUNTIME_VERSION=gnustep-2.0
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+  export LD=/usr/bin/ld.gold
+  export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
+  export OBJCFLAGS="-fblocks"
+}
+
+function installGNUstepMake()
+{
+  echo -e "\n\n"
+  echo -e "${GREEN}Building GNUstep-make (again)...${NC}"
+  cd ../make
+  ./configure \
+    --with-layout=gnustep \
+    --disable-importing-config-file \
+    --enable-native-objc-exceptions \
+    --enable-objc-arc \
+    --enable-install-ld-so-conf \
+    --with-library-combo=ng-gnu-gnu
+  make -j8
+  sudo -E make install
+  sudo ldconfig
+}
+
+# Set colors
+GREEN=`tput setaf 2`
+NC=`tput sgr0` # No Color
+
+# Set to true to also build and install apps
+APPS=true
+
+# Set to true to also build and install some nice themes
+THEMES=true
+
+# Set to true to pause after each build to verify successful build and installation
+PROMPT=true
+
+# Install Requirements
+sudo apt update
+
+echo -e "\n\n${GREEN}Installing dependencies...${NC}"
+
+sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
+sudo apt-get update
+sudo apt -y install clang-8 lldb-8 lld-8 build-essential git subversion \
+libpthread-workqueue0 libpthread-workqueue-dev \
+libxml2 libxml2-dev \
+libffi6 libffi-dev \
+libicu-dev \
+libuuid1 uuid-dev uuid-runtime \
+libsctp1 libsctp-dev lksctp-tools \
+libavahi-core7 libavahi-core-dev \
+libavahi-client3 libavahi-client-dev \
+libavahi-common3 libavahi-common-dev libavahi-common-data \
+libgcrypt20 libgcrypt20-dev \
+libtiff5 libtiff5-dev \
+libbsd0 libbsd-dev \
+util-linux-locales \
+locales-all \
+libjpeg-dev \
+libtiff-dev \
+libcups2-dev \
+libfreetype6-dev \
+libcairo2-dev \
+libxt-dev \
+libgl1-mesa-dev \
+libpcap-dev \
+libc-dev libc++-dev libc++1 \
+python-dev swig \
+libedit-dev libeditline0 libeditline-dev readline-common \
+binfmt-support libtinfo-dev \
+bison flex m4 wget \
+libicns1 libicns-dev \
+libxslt1.1 libxslt1-dev \
+libxft2 libxft-dev \
+libflite1 flite1-dev \
+libxmu6 libxpm4 wmaker-common \
+libgnutls30 libgnutls28-dev \
+libpng-dev libpng16-16 \
+default-libmysqlclient-dev \
+libpq-dev \
+libstdc++-6-dev \
+libreadline7 libreadline-dev \gobjc-6 gobjc++-6 \
+libgif7 libgif-dev libwings3 libwings-dev libwraster5 \
+libwraster-dev libwutil5 \
+libcups2-dev libicu57 libicu-dev \
+gobjc++ \
+xorg \
+libfreetype6 libfreetype6-dev \
+libpango1.0-dev \
+libcairo2-dev \
+libxt-dev libssl-dev \
+libasound2-dev libjack-dev libjack0 libportaudio2 \
+libportaudiocpp0 portaudio19-dev \
+libstdc++-6-dev libstdc++-6-doc libstdc++-6-pic \
+libstdc++6 wmaker cmake cmake-curses-gui xpdf
+
+if [ "$APPS" = true ] ; then
+  sudo apt -y install curl
+fi
+
+# Create build directory
+mkdir GNUstep-build
+cd GNUstep-build
+
+exportEnvVars
+
+# Checkout sources
+echo -e "\n\n${GREEN}Checking out sources...${NC}"
+git clone https://github.com/mheily/libkqueue.git
+wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
+git clone https://github.com/apple/swift-corelibs-libdispatch
+git clone https://github.com/gnustep/scripts
+git clone https://github.com/gnustep/make
+git clone https://github.com/gnustep/libobjc2
+git clone https://github.com/gnustep/base
+git clone https://github.com/gnustep/corebase
+git clone https://github.com/gnustep/gui
+git clone https://github.com/gnustep/back
+
+if [ "$APPS" = true ] ; then
+  git clone https://github.com/gnustep/apps-projectcenter.git
+  git clone https://github.com/gnustep/apps-gorm.git
+  wget http://savannah.nongnu.org/download/gap/PDFKit-1.0.1.tar.gz
+  git clone https://github.com/gnustep/apps-gworkspace.git
+  git clone https://github.com/gnustep/apps-systempreferences.git
+fi
+
+if [ "$THEMES" = true ] ; then
+  git clone https://github.com/BertrandDekoninck/NarcissusRik.git
+  git clone https://github.com/BertrandDekoninck/NesedahRik.git
+  git clone https://github.com/BertrandDekoninck/rik.theme.git
+fi
+
+showPrompt
+
+# We compile libiconv. Debian comes standard with version 1.14 but there was an issue in 1.14 
+# which got fixed in 1.15 which was relevant to us so using 1.15 is recommended.
+echo -e "\n\n"
+echo -e "${GREEN}Building libiconv...${NC}"
+tar -xvzf libiconv-1.15.tar.gz
+cd libiconv-1.15
+./configure --enable-static --enable-dynamic
+make
+sudo -E make install
+
+showPrompt
+
+# Build libkqueue manually as Debian does not provide a package for it anymore
+echo -e "\n\n"
+echo -e "${GREEN}Building libkqueue...${NC}"
+cd ../libkqueue
+cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib .
+make
+cpack -G DEB
+sudo dpkg -i libkqueue_*.deb
+sudo dpkg -i libkqueue-dev_*.deb
+
+showPrompt
+
+installGNUstepMake
+
+. /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
+
+showPrompt
+
+exportEnvVars
+
+# Build libdispatch
+echo -e "\n\n"
+echo -e "${GREEN}Building libdispatch...${NC}"
+cd ../swift-corelibs-libdispatch
+rm -Rf build
+mkdir build && cd build
+cmake .. -DCMAKE_C_COMPILER=${CC} \
+-DCMAKE_CXX_COMPILER=${CXX} \
+-DCMAKE_BUILD_TYPE=Release \
+-DUSE_GOLD_LINKER=YES
+make
+sudo make install
+sudo ldconfig
+
+showPrompt
+
+# Build libobjc2
+echo -e "\n\n"
+echo -e "${GREEN}Building libobjc2...${NC}"
+cd ../../libobjc2
+rm -Rf build
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+-DBUILD_STATIC_LIBOBJC=1 \
+-DCMAKE_C_COMPILER=${CC} \
+-DCMAKE_CXX_COMPILER=${CXX} \
+-DCMAKE_LINKER=${LD} \
+-DCMAKE_MODULE_LINKER_FLAGS="${LDFLAGS}"
+make -j8
+sudo -E make install
+sudo ldconfig
+cd ..
+
+showPrompt
+
+# Build GNUstep make second time
+installGNUstepMake
+
+. /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+
+# GNUstep make files / gold linker seem to look for libobjc within the following path, so link it
+#sudo ln -s /usr/local/lib/libobjc.so /usr/GNUstep/Local/Library/Libraries/libobjc.so
+#sudo ln -s /usr/local/lib/libobjc.a /usr/GNUstep/Local/Library/Libraries/libobjc.a
+#sudo ln -s /usr/local/lib/libdispatch.so /usr/GNUstep/Local/Library/Libraries/libdispatch.so
+#sudo ln -s /usr/local/lib/libdispatch.a /usr/GNUstep/Local/Library/Libraries/libdispatch.a
+
+showPrompt
+
+# Build GNUstep base
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep-base...${NC}"
+cd ../base/
+#./configure --with-config-file=/usr/local/etc/GNUstep/GNUstep.conf --with-libiconv-library=/usr/local/lib
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
+
+showPrompt
+
+# Build GNUstep corebase
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep corebase...${NC}"
+cd ../corebase
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
+
+showPrompt
+
+# Build GNUstep GUI
+echo -e "\n\n"
+echo -e "${GREEN} Building GNUstep-gui...${NC}"
+cd ../gui
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
+
+showPrompt
+
+# Build GNUstep back
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep-back...${NC}"
+cd ../back
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
+
+showPrompt
+
+. /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+
+if [ "$APPS" = true ] ; then
+# ProjectCenter build will fail currently
+  echo -e "${GREEN}Building ProjectCenter...${NC}"
+  cd ../apps-projectcenter/
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "${GREEN}Building Gorm...${NC}"
+  cd ../apps-gorm/
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "${GREEN}Building PDFKit...${NC}"
+  tar xzf PDFKit-1.0.1.tar.gz
+  cd ../PDFKit-1.0.1/
+  make -j8
+  sudo -E make install
+
+  showPrompt  
+
+  echo -e "\n\n"
+  echo -e "${GREEN}Building GWorkspace...${NC}"
+  cd ../apps-gworkspace/
+  ./configure
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "\n\n"
+  echo -e "${GREEN}Building SystemPreferences...${NC}"
+  cd ../apps-systempreferences/
+  make -j8
+  sudo -E make install
+
+fi
+
+if [ "$THEMES" = true ] ; then
+
+  showPrompt
+
+  echo -e "\n\n"
+  echo -e "${GREEN}Building rik.theme...${NC}"
+  cd ../rik.theme/
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "\n\n"
+  echo -e "${GREEN}Installing NesedahRik.theme...${NC}"
+  cd ../NesedahRik/
+  sudo cp -R NesedahRik.theme /usr/GNUstep/Local/Library/Themes/
+
+  showPrompt
+
+  echo -e "\n\n"
+  echo -e "${GREEN}Installing NarcissusRik.theme...${NC}"
+  cd ../NarcissusRik/
+  sudo cp -R NarcissusRik.theme /usr/GNUstep/Local/Library/Themes/
+fi
+
+echo -e "\n\n"
+echo -e "${GREEN}Install is done. Open a new terminal to start using.${NC}"
