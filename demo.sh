@@ -163,6 +163,7 @@ openapp ./FractionDemo.app
 
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
+OBJCFLAGS = -fobjc-arc
 APP_NAME = FractionArcDemo
 FractionArcDemo_OBJC_FILES = Fraction.m helloGCD_ARC_objc.m
 include \$(GNUSTEP_MAKEFILES)/application.make
