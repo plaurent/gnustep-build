@@ -46,9 +46,6 @@ export CXX=clang++
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 #git clone https://github.com/nickhutchinson/libdispatch.git
 git clone https://github.com/plaurent/libdispatch.git
-cd libdispatch
-  git checkout fix_major_missing_symbol_for_ubuntu1904
-cd ..
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
   git checkout 1.9  # 2.0 and onward require clang8 or newer
