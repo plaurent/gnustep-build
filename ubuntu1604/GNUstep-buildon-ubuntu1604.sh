@@ -50,6 +50,9 @@ cd libdispatch
   git checkout fix_major_missing_symbol_for_ubuntu1904
 cd ..
 git clone https://github.com/gnustep/libobjc2.git
+cd libobjc2
+  git checkout 1.9  # 2.0 and onward require clang8 or newer
+cd ..
 git clone https://github.com/gnustep/tools-make.git
 git clone https://github.com/gnustep/libs-base.git
 git clone https://github.com/gnustep/libs-gui.git
@@ -95,7 +98,6 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
-  git checkout 1.9
 rm -Rf build
 mkdir build && cd build
 cmake ../ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
