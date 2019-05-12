@@ -24,21 +24,19 @@ EOF
 
 # Using COMMAND LINE
 
-echo "Compiling and running GUI demo (command line compilation)."
+echo "Compiling and running GUI + ARC demo (command line compilation)."
 clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
 ./a.out
 
 # Using MAKEFILE
-
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
-
+OBJCFLAGS = -fobjc-arc
 APP_NAME = GUITest
 GUITest_OBJC_FILES = guitest.m
-
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
 
-echo "Compiling and running GUI demo (makefile compilation)."
+echo "Compiling and running GUI + ARC demo (makefile compilation)."
 make
 openapp ./GUITest.app
