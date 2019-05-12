@@ -7,4 +7,4 @@ before_install:
   - docker build -t gnustep-clang-ubuntu1904 ubuntu1904/testing/.
 
 script:
-  - docker ps -a | grep -q ubuntu1904
+  - docker run gnustep-clang-ubuntu1904 | grep -q "ARC is working"
