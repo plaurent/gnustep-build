@@ -13,7 +13,6 @@ int main() {
 EOF
 
 cat > helloGCD_objc.m << EOF
-
 #include <dispatch/dispatch.h>
 #import <stdio.h>
 #import "Fraction.h"
@@ -32,12 +31,39 @@ int main( int argc, const char *argv[] ) {
      printf( "\n" );
    });
    dispatch_release(queue);
+   [frac release];
 
    return 0;
 }
-
 EOF
 
+cat > helloGCD_ARC_objc.m << EOF
+#include <dispatch/dispatch.h>
+#import <stdio.h>
+#import "Fraction.h"
+
+int main( int argc, const char *argv[] ) {
+   dispatch_queue_t queue = dispatch_queue_create(NULL, NULL);
+   Fraction *frac = [[Fraction alloc] init];
+
+   [frac setNumerator: 1];
+   [frac setDenominator: 3];
+
+   // print it
+   dispatch_sync(queue, ^{
+     printf( "The fraction is: " );
+     [frac print];
+     printf( "\n" );
+   });
+   if (__has_feature(objc_arc)) {
+     printf("ARC is working.");
+     return 0;
+   } else {
+     printf("ARC is not working.");
+     return -1;
+   }
+}
+EOF
 cat > Fraction.h << EOF
 
 #import <Foundation/NSObject.h>
@@ -123,13 +149,25 @@ clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -ldispat
 
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
-
 APP_NAME = FractionDemo
 FractionDemo_OBJC_FILES = Fraction.m helloGCD_objc.m
-
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
 
 echo "Compiling and running Fraction demo (makefile compilation)."
 make
 openapp ./FractionDemo.app
+
+
+# Using MAKEFILE with enabled ARC
+
+cat > GNUmakefile << EOF
+include \$(GNUSTEP_MAKEFILES)/common.make
+APP_NAME = FractionArcDemo
+FractionArcDemo_OBJC_FILES = Fraction.m helloGCD_ARC_objc.m
+include \$(GNUSTEP_MAKEFILES)/application.make
+EOF
+
+echo "Compiling and running Fraction ARC demo (makefile compilation)."
+make
+openapp ./FractionArcDemo.app
