@@ -1,2 +1,2 @@
-docker build -t gnustep-clang-ubuntu1904 testing/.
-docker run gnustep-clang-ubuntu1904
+docker build -t gnustep-clang-ubuntu1604 testing/.
+docker run gnustep-clang-ubuntu1604
