@@ -137,12 +137,21 @@ EOF
 
 # Using COMMAND LINE
 
+if [ -x "$(command -v clang-8)" ]; then
+  CC=clang-8
+elif [ -x "$(command -v clang)" ]; then
+  CC=clang
+else
+  echo 'Error: clang seems not to be in PATH. Please check your $PATH.' >&2
+  exit 1
+fi
+
 echo "Compiling and running blocks demo."
-clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc  blocktest.m
+${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc  blocktest.m
 ./a.out
 
 echo "Compiling and running Grand Central Dispatch demo."
-clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -ldispatch -lgnustep-base  Fraction.m helloGCD_objc.m
+${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -ldispatch -lgnustep-base  Fraction.m helloGCD_objc.m
 ./a.out
 
 # Using MAKEFILE

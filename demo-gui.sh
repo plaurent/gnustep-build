@@ -23,9 +23,18 @@ EOF
 # ======================================================================
 
 # Using COMMAND LINE
+if [ -x "$(command -v clang-8)" ]; then
+  CC=clang-8
+elif [ -x "$(command -v clang)" ]; then
+  CC=clang
+else
+  echo 'Error: clang seems not to be in PATH. Please check your $PATH.' >&2
+  exit 1
+fi
+
 
 echo "Compiling and running GUI + ARC demo (command line compilation)."
-clang `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
+${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
 ./a.out
 
 # Using MAKEFILE
