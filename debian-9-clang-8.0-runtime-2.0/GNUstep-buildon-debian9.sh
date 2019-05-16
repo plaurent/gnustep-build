@@ -1,11 +1,9 @@
 #!/bin/bash
 
 ## Script to install the newest available version of GNUstep on Debian stable (stretch)
-## based on the script for Ubuntu, originating from http://wiki.gnustep.org/index.php/GNUstep_under_Ubuntu_Linux,
-## see master branch now.
+## based on the script for Ubuntu, originating from http://wiki.gnustep.org/index.php/GNUstep_under_Ubuntu_Linux.
 
-## Before executing this script make sure you have stretch-backports in your /etc/apt/sources.list:
-## deb http://deb.debian.org/debian stretch-backports main
+## Before executing this script make sure you have clang installed from apt.llvm.org, see README for instructions.
 
 # Show prompt function
 function showPrompt()
@@ -57,7 +55,7 @@ APPS=true
 THEMES=true
 
 # Set to true to pause after each build to verify successful build and installation
-PROMPT=true
+PROMPT=false
 
 # Install Requirements
 sudo apt update
@@ -131,10 +129,11 @@ exportEnvVars
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-git clone https://github.com/mheily/libkqueue.git
+# Uncomment this if libkqueue is still needed
+#git clone https://github.com/mheily/libkqueue.git
 wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
-git clone https://github.com/gnustep/scripts
+#git clone https://github.com/gnustep/scripts
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
 git clone https://github.com/gnustep/base
@@ -143,7 +142,7 @@ git clone https://github.com/gnustep/gui
 git clone https://github.com/gnustep/back
 
 if [ "$APPS" = true ] ; then
-  git clone https://github.com/gnustep/apps-projectcenter.git
+#  git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
   wget http://savannah.nongnu.org/download/gap/PDFKit-1.0.1.tar.gz
   git clone https://github.com/gnustep/apps-gworkspace.git
@@ -153,7 +152,7 @@ fi
 if [ "$THEMES" = true ] ; then
   git clone https://github.com/BertrandDekoninck/NarcissusRik.git
   git clone https://github.com/BertrandDekoninck/NesedahRik.git
-  git clone https://github.com/BertrandDekoninck/rik.theme.git
+#  git clone https://github.com/BertrandDekoninck/rik.theme.git
 fi
 
 showPrompt
@@ -164,21 +163,23 @@ echo -e "\n\n"
 echo -e "${GREEN}Building libiconv...${NC}"
 tar -xvzf libiconv-1.15.tar.gz
 cd libiconv-1.15
+make clean
 ./configure --enable-static --enable-dynamic
 make
 sudo -E make install
 
 showPrompt
 
+## Uncomment this if libkqueue is still required by libdispatch
 # Build libkqueue manually as Debian does not provide a package for it anymore
-echo -e "\n\n"
-echo -e "${GREEN}Building libkqueue...${NC}"
-cd ../libkqueue
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib .
-make
-cpack -G DEB
-sudo dpkg -i libkqueue_*.deb
-sudo dpkg -i libkqueue-dev_*.deb
+#echo -e "\n\n"
+#echo -e "${GREEN}Building libkqueue...${NC}"
+#cd ../libkqueue
+#cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -#DCMAKE_INSTALL_LIBDIR=lib .
+#make
+#cpack -G DEB
+#sudo dpkg -i libkqueue_*.deb
+#sudo dpkg -i libkqueue-dev_*.deb
 
 showPrompt
 
@@ -226,25 +227,23 @@ cd ..
 
 showPrompt
 
-# Build GNUstep make second time
+# Build GNUstep make second time, make sure gnustep configuration contains linking of libdispatch
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -ldispatch"
 installGNUstepMake
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
-# GNUstep make files / gold linker seem to look for libobjc within the following path, so link it
-#sudo ln -s /usr/local/lib/libobjc.so /usr/GNUstep/Local/Library/Libraries/libobjc.so
-#sudo ln -s /usr/local/lib/libobjc.a /usr/GNUstep/Local/Library/Libraries/libobjc.a
-#sudo ln -s /usr/local/lib/libdispatch.so /usr/GNUstep/Local/Library/Libraries/libdispatch.so
-#sudo ln -s /usr/local/lib/libdispatch.a /usr/GNUstep/Local/Library/Libraries/libdispatch.a
-
+# Remove libdispatch from linker flags again so the following libraries will build
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 showPrompt
 
 # Build GNUstep base
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-base...${NC}"
 cd ../base/
+make clean
 #./configure --with-config-file=/usr/local/etc/GNUstep/GNUstep.conf --with-libiconv-library=/usr/local/lib
-./configure
+./configure --with-libiconv-library=/usr/local/lib
 make -j8
 sudo -E make install
 sudo ldconfig
@@ -255,6 +254,7 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep corebase...${NC}"
 cd ../corebase
+make clean
 ./configure
 make -j8
 sudo -E make install
@@ -266,6 +266,7 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN} Building GNUstep-gui...${NC}"
 cd ../gui
+make clean
 ./configure
 make -j8
 sudo -E make install
@@ -277,6 +278,7 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-back...${NC}"
 cd ../back
+make clean
 ./configure
 make -j8
 sudo -E make install
@@ -287,24 +289,28 @@ showPrompt
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
 if [ "$APPS" = true ] ; then
-# ProjectCenter build will fail currently
-  echo -e "${GREEN}Building ProjectCenter...${NC}"
-  cd ../apps-projectcenter/
-  make -j8
-  sudo -E make install
+# ProjectCenter build will fail currently, see README for details
+#  echo -e "${GREEN}Building ProjectCenter...${NC}"
+#  cd ../apps-projectcenter/
+#  make clean
+#  make -j8
+#  sudo -E make install
 
   showPrompt
 
   echo -e "${GREEN}Building Gorm...${NC}"
   cd ../apps-gorm/
+  make clean
   make -j8
   sudo -E make install
 
   showPrompt
 
   echo -e "${GREEN}Building PDFKit...${NC}"
+  cd ..
   tar xzf PDFKit-1.0.1.tar.gz
-  cd ../PDFKit-1.0.1/
+  cd PDFKit-1.0.1/
+  make clean
   make -j8
   sudo -E make install
 
@@ -313,6 +319,7 @@ if [ "$APPS" = true ] ; then
   echo -e "\n\n"
   echo -e "${GREEN}Building GWorkspace...${NC}"
   cd ../apps-gworkspace/
+  make clean
   ./configure
   make -j8
   sudo -E make install
@@ -322,6 +329,7 @@ if [ "$APPS" = true ] ; then
   echo -e "\n\n"
   echo -e "${GREEN}Building SystemPreferences...${NC}"
   cd ../apps-systempreferences/
+  make clean
   make -j8
   sudo -E make install
 
@@ -331,11 +339,13 @@ if [ "$THEMES" = true ] ; then
 
   showPrompt
 
-  echo -e "\n\n"
-  echo -e "${GREEN}Building rik.theme...${NC}"
-  cd ../rik.theme/
-  make -j8
-  sudo -E make install
+#rik.theme build will fail currently, see README for details
+#  echo -e "\n\n"
+#  echo -e "${GREEN}Building rik.theme...${NC}"
+#  cd ../rik.theme/
+#  make clean
+#  make -j8
+#  sudo -E make install
 
   showPrompt
 
