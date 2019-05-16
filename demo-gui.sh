@@ -22,17 +22,21 @@ EOF
 # COMPILE USING THE FOLLOWING COMMAND LINES, OR CREATE A MAKEFILE
 # ======================================================================
 
-# Using COMMAND LINE
-if [ -x "$(command -v clang-8)" ]; then
-  CC=clang-8
-elif [ -x "$(command -v clang)" ]; then
-  CC=clang
+# Set compiler
+if [ -x "$(command -v ${CC})" ]; then
+  echo "Using CC from environment variable: ${CC}"
 else
-  echo 'Error: clang seems not to be in PATH. Please check your $PATH.' >&2
-  exit 1
+  if [ -x "$(command -v clang-8)" ]; then
+    CC=clang-8
+  elif [ -x "$(command -v clang)" ]; then
+    CC=clang
+  else
+    echo 'Error: clang seems not to be in PATH. Please check your $PATH.' >&2
+    exit 1
+  fi
 fi
 
-
+# Using COMMAND LINE
 echo "Compiling and running GUI + ARC demo (command line compilation)."
 ${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
 ./a.out
