@@ -142,7 +142,7 @@ git clone https://github.com/gnustep/gui
 git clone https://github.com/gnustep/back
 
 if [ "$APPS" = true ] ; then
-#  git clone https://github.com/gnustep/apps-projectcenter.git
+  git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
   wget http://savannah.nongnu.org/download/gap/PDFKit-1.0.1.tar.gz
   git clone https://github.com/gnustep/apps-gworkspace.git
@@ -289,12 +289,11 @@ showPrompt
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
 if [ "$APPS" = true ] ; then
-# ProjectCenter build will fail currently, see README for details
-#  echo -e "${GREEN}Building ProjectCenter...${NC}"
-#  cd ../apps-projectcenter/
-#  make clean
-#  make -j8
-#  sudo -E make install
+  echo -e "${GREEN}Building ProjectCenter...${NC}"
+  cd ../apps-projectcenter/
+  make clean
+  make -j8
+  sudo -E make install
 
   showPrompt
 
