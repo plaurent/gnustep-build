@@ -2,7 +2,7 @@
 
 ## What's this?
 
-This script is based on the for Ubuntu which can be found in its directory and extensive compilation instructions by Andreas Fink. The aim of the script is to build the most current version of GNUstep (including GNUstep libobjc2) on Debian stable, which should be compiled using clang instead of using GCC.
+This script is based on the for Ubuntu which can be found in its directory and [extensive compilation instructions](http://wiki.gnustep.org/index.php/Building_GNUstep_under_Debian_FreeBSD) by Andreas Fink. The aim of the script is to build the most current version of GNUstep (including GNUstep libobjc2) on Debian stable, which should be compiled using clang instead of using GCC.
 
 We are going compile libobjc2 master (2.0/2.1), which requires clang 8 at least.
 
@@ -46,7 +46,7 @@ Execution of the script may take some time. If all goes well, you will have a wo
 
 ### 3. Optional: Get a nice Mac like look
 
-**Update (2019/05/15): Please note that ProjectCenter and rik.theme are not going to work using the current setup due to linking issues (ivar types either seem to be incompatible with libs-gui or there is access of private ivars which is not compatible with clang).** I suggest using one of the other two themes that do not need compilation/linking.
+**Update (2019/05/22): Please note that rik.theme is not going to work using the current setup due to linking issues (ivar types either seem to be incompatible with libs-gui or there is access of private ivars which is not compatible with clang).** I suggest using one of the other two themes that do not need compilation/linking.
 
 As a person used to work with a Mac I suggest you put the following settings in place to get a nice look for your GNUstep apps that is similar to [this one](https://github.com/BertrandDekoninck/rik.theme/blob/master/newscreen.png):
 
