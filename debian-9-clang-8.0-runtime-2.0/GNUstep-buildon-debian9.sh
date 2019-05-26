@@ -227,14 +227,10 @@ cd ..
 
 showPrompt
 
-# Build GNUstep make second time, make sure gnustep configuration contains linking of libdispatch
-export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -ldispatch"
+# Build GNUstep make second time
 installGNUstepMake
-
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
-# Remove libdispatch from linker flags again so the following libraries will build
-export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 showPrompt
 
 # Build GNUstep base
