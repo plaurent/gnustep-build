@@ -64,6 +64,9 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
+echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main deb-src http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main" > /etc/apt/sources.list.d/llvm.list
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+
 sudo apt -y install clang-8 lldb-8 lld-8 build-essential git subversion \
 libpthread-workqueue0 libpthread-workqueue-dev \
 libxml2 libxml2-dev \
