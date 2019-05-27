@@ -66,6 +66,7 @@ sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
 echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main deb-src http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main" > /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+sudo apt-get update
 
 sudo apt -y install clang-8 lldb-8 lld-8 build-essential git subversion \
 libpthread-workqueue0 libpthread-workqueue-dev \
@@ -166,8 +167,8 @@ echo -e "\n\n"
 echo -e "${GREEN}Building libiconv...${NC}"
 tar -xvzf libiconv-1.15.tar.gz
 cd libiconv-1.15
-make clean
 ./configure --enable-static --enable-dynamic
+make clean
 make
 sudo -E make install
 
@@ -206,7 +207,7 @@ cmake .. -DCMAKE_C_COMPILER=${CC} \
 -DCMAKE_BUILD_TYPE=Release \
 -DUSE_GOLD_LINKER=YES
 make
-sudo make install
+sudo -E make install
 sudo ldconfig
 
 showPrompt
