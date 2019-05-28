@@ -67,7 +67,7 @@ sudo apt-get update
 echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main deb-src http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main" > /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
-
+sudo apt -y remove clang
 sudo apt -y install clang-8 lldb-8 lld-8 build-essential git subversion \
 libpthread-workqueue0 libpthread-workqueue-dev \
 libxml2 libxml2-dev \
