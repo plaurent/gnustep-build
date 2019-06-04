@@ -1,7 +1,7 @@
 FROM debian:9
 
 RUN apt-get update && apt-get install -y clang build-essential wget git sudo
-RUN git clone https://github.com/plaurent/gnustep-build
+RUN git clone https://github.com/plaurent/gnustep-build --branch add_debian_clang8_repository
 RUN cp gnustep-build/*.sh .
 RUN cp gnustep-build/debian-9-clang-8.0-runtime-2.0/*.sh .
 RUN cp gnustep-build/debian-9-clang-8.0-runtime-2.0/testing/Dockerfile .
