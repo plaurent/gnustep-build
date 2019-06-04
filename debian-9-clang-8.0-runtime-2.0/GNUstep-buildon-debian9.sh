@@ -20,10 +20,9 @@ export CXX=clang++-8
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-# export LD=/usr/bin/ld.gold
-#export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib" # -ldispatch"
-export LDFLAGS="-L/usr/local/lib" # -ldispatch"
-export OBJCFLAGS="-fblocks"  #  -fobjc-runtime=gnustep-2.0"
+export LD=/usr/bin/ld.gold
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
+export OBJCFLAGS="-fblocks"
 
 function installGNUstepMake()
 {
@@ -48,7 +47,7 @@ GREEN=`tput setaf 2`
 NC=`tput sgr0` # No Color
 
 # Set to true to also build and install apps
-APPS=false
+APPS=true
 
 # Set to true to also build and install some nice themes
 THEMES=false
@@ -134,10 +133,8 @@ cd GNUstep-build
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 # Uncomment this if libkqueue is still needed
-#git clone https://github.com/mheily/libkqueue.git
 wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
-#git clone https://github.com/plaurent/libdispatch.git
 git clone https://github.com/gnustep/scripts
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
@@ -175,33 +172,8 @@ sudo -E make install
 
 showPrompt
 
-### Uncomment this if libkqueue is still required by libdispatch
-## Build libkqueue manually as Debian does not provide a package for it anymore
-#echo -e "\n\n"
-#echo -e "${GREEN}Building libkqueue...${NC}"
-#cd ../libkqueue
-#cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -#DCMAKE_INSTALL_LIBDIR=lib .
-#make
-#cpack -G DEB
-#sudo dpkg -i libkqueue_*.deb
-#sudo dpkg -i libkqueue-dev_*.deb
+installGNUstepMake
 
-showPrompt
-
-echo -e "\n\n"
-echo -e "${GREEN}Building GNUstep-make...${NC}"
-cd ../make
-make clean
-CC=clang-8 ./configure \
-  --with-layout=gnustep \
-      --disable-importing-config-file \
-          --enable-native-objc-exceptions \
-              --enable-objc-arc \
-                  --enable-install-ld-so-conf \
-                      --with-library-combo=ng-gnu-gnu
-make -j8
-sudo -E make install
-sudo ldconfig
 
 echo $LDFLAGS
 echo $OBJCFLAGS
@@ -209,11 +181,12 @@ echo $OBJCFLAGS
 echo $LDFLAGS
 echo $OBJCFLAGS
 echo "export RUNTIME_VERSION=gnustep-2.0"  >> ~/.bashrc
+echo "export LD=/usr/bin/ld.gold" >> ~/.bashrc
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 
 showPrompt
 
-## Build libdispatch
+## Build libDIspatch
 echo -e "\n\n"
 echo -e "${GREEN}Building libdispatch...${NC}"
 cd ../swift-corelibs-libdispatch
@@ -222,7 +195,7 @@ mkdir build && cd build
 cmake .. -DCMAKE_C_COMPILER=${CC} \
 -DCMAKE_CXX_COMPILER=${CXX} \
 -DCMAKE_BUILD_TYPE=Release
-#-DUSE_GOLD_LINKER=YES
+-DUSE_GOLD_LINKER=YES
 make
 sudo -E make install
 sudo ldconfig
@@ -250,33 +223,11 @@ showPrompt
 
 # Build GNUstep make second time -- now adding support for libdispatch
 
-#export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -ldispatch"
-export LDFLAGS="-L/usr/local/lib -ldispatch"
-ldconfig
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 
-
-echo -e "\n\n"
-echo -e "${GREEN}Building GNUstep-make...${NC}"
-cd ../make
-make clean
-CC=clang-8 ./configure \
-  --with-layout=gnustep \
-      --disable-importing-config-file \
-          --enable-native-objc-exceptions \
-              --enable-objc-arc \
-                  --enable-install-ld-so-conf \
-                      --with-library-combo=ng-gnu-gnu
-make -j8
-sudo -E make install
-sudo ldconfig
+installGNUstepMake
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-
-gnustep-config --objc-libs
-
-echo "is :/usr/GNUstep/Local/Tools:/usr/GNUstep/System/Tools on the path???"
-ldconfig
-echo $PATH
 
 showPrompt
 
@@ -293,7 +244,7 @@ sudo ldconfig
 
 showPrompt
 
-## Build GNUstep corebase
+# Build GNUstep corebase
 #echo -e "\n\n"
 #echo -e "${GREEN}Building GNUstep corebase...${NC}"
 #cd ../corebase
@@ -305,32 +256,36 @@ showPrompt
 
 showPrompt
 
-## Build GNUstep GUI
-#echo -e "\n\n"
-#echo -e "${GREEN} Building GNUstep-gui...${NC}"
-#cd ../gui
-#make clean
-#./configure
-#make -j8
-#sudo -E make install
-#sudo ldconfig
+# Build GNUstep GUI
+echo -e "\n\n"
+echo -e "${GREEN} Building GNUstep-gui...${NC}"
+cd ../gui
+make clean
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
 
 showPrompt
 
-## Build GNUstep back
-#echo -e "\n\n"
-#echo -e "${GREEN}Building GNUstep-back...${NC}"
-#cd ../back
-#make clean
-#./configure
-#make -j8
-#sudo -E make install
-#sudo ldconfig
+# Build GNUstep back
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep-back...${NC}"
+cd ../back
+make clean
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
 
 showPrompt
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -ldispatch"
+ldconfig
+
+installGNUstepMake
 if [ "$APPS" = true ] ; then
   echo -e "${GREEN}Building ProjectCenter...${NC}"
   cd ../apps-projectcenter/
