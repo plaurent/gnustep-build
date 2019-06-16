@@ -106,7 +106,7 @@ export LDFLAGS=-ldispatch
 
 showPrompt
 
-OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-2.0"
+OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-1.9"
 
 # Build GNUstep make second time
 echo -e "\n\n"
