@@ -41,7 +41,7 @@ cd GNUstep-build
 # Set clang as compiler
 export CC=clang
 export CXX=clang++
-export RUNTIME_VERSION=gnustep-2.0
+#export RUNTIME_VERSION=gnustep-2.0
 
 
 # Checkout sources
@@ -77,7 +77,7 @@ sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
-echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
+#echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
 
 
 showPrompt
