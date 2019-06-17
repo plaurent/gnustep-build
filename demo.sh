@@ -163,6 +163,7 @@ ${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -ldispat
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
 APP_NAME = FractionDemo
+LDFLAGS = -ldispatch
 FractionDemo_OBJC_FILES = Fraction.m helloGCD_objc.m
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
@@ -177,6 +178,7 @@ openapp ./FractionDemo.app
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
 OBJCFLAGS = -fobjc-arc
+LDFLAGS = -ldispatch
 APP_NAME = FractionArcDemo
 FractionArcDemo_OBJC_FILES = Fraction.m helloGCD_ARC_objc.m
 include \$(GNUSTEP_MAKEFILES)/application.make

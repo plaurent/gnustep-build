@@ -41,7 +41,10 @@ cd GNUstep-build
 # Set clang as compiler
 export CC=clang
 export CXX=clang++
-#export RUNTIME_VERSION=gnustep-2.0
+export RUNTIME_VERSION=gnustep-2.0
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+export LD=/usr/bin/ld.gold
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 
 
 # Checkout sources
@@ -64,6 +67,7 @@ if [ "$APPS" = true ] ; then
   git clone https://github.com/gnustep/apps-systempreferences.git
 fi
 
+set -e
 showPrompt
 
 # Build GNUstep make first time
@@ -71,13 +75,21 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the first time...${NC}"
 cd tools-make
 # git checkout `git rev-list -1 --first-parent --before=2017-04-06 master` # fixes segfault, should probably be looked at.
-./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
+#./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
+  CC=clang-8 ./configure \
+          --with-layout=gnustep \
+              --disable-importing-config-file \
+                  --enable-native-objc-exceptions \
+                      --enable-objc-arc \
+                          --enable-install-ld-so-conf \
+                              --with-library-combo=ng-gnu-gnu
+
 make -j8
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
-#echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
+echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
 
 
 showPrompt
@@ -106,17 +118,21 @@ cmake --build .
 sudo -E make install
 sudo ldconfig
 
-export LDFLAGS=-ldispatch
-
 showPrompt
-
-OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-2.0"
 
 # Build GNUstep make second time
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the second time...${NC}"
 cd ../../tools-make
-./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
+#./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
+  CC=clang-8 ./configure \
+          --with-layout=gnustep \
+              --disable-importing-config-file \
+                  --enable-native-objc-exceptions \
+                      --enable-objc-arc \
+                          --enable-install-ld-so-conf \
+                              --with-library-combo=ng-gnu-gnu
+
 make -j8
 sudo -E make install
 
