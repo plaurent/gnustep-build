@@ -45,6 +45,7 @@ ${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-a
 cat > GNUmakefile << EOF
 include \$(GNUSTEP_MAKEFILES)/common.make
 OBJCFLAGS = -fobjc-arc
+LDFLAGS = -ldispatch
 APP_NAME = GUITest
 GUITest_OBJC_FILES = guitest.m
 include \$(GNUSTEP_MAKEFILES)/application.make

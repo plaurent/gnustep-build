@@ -221,9 +221,7 @@ cd ..
 
 showPrompt
 
-# Build GNUstep make second time -- now adding support for libdispatch
-
-export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
+# Build GNUstep make second time
 
 installGNUstepMake
 
@@ -282,7 +280,7 @@ showPrompt
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
-export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -ldispatch"
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 ldconfig
 
 installGNUstepMake
