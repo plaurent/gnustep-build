@@ -41,6 +41,11 @@ cd GNUstep-build
 # Set clang as compiler
 export CC=clang
 export CXX=clang++
+export RUNTIME_VERSION=gnustep-1.9
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+export LD=/usr/bin/ld.gold
+export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
+
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
@@ -102,11 +107,7 @@ cmake --build .
 sudo -E make install
 sudo ldconfig
 
-export LDFLAGS=-ldispatch
-
 showPrompt
-
-OBJCFLAGS="-fblocks -fobjc-runtime=gnustep-1.9"
 
 # Build GNUstep make second time
 echo -e "\n\n"
