@@ -50,6 +50,7 @@ export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 #git clone https://github.com/nickhutchinson/libdispatch.git
+git clone https://github.com/apple/swift-corelibs-libdispatch
 git clone https://github.com/plaurent/libdispatch.git
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
@@ -84,16 +85,30 @@ echo "export RUNTIME_VERSION=gnustep-1.9" >> ~/.bashrc
 
 showPrompt
 
-# Build libdispatch
+## Build libDIspatch
 echo -e "\n\n"
 echo -e "${GREEN}Building libdispatch...${NC}"
-cd ../libdispatch
+cd ../swift-corelibs-libdispatch
 rm -Rf build
 mkdir build && cd build
-../configure  --prefix=/usr
+cmake .. -DCMAKE_C_COMPILER=${CC} \
+-DCMAKE_CXX_COMPILER=${CXX} \
+-DCMAKE_BUILD_TYPE=Release \
+-DUSE_GOLD_LINKER=YES
 make
-sudo make install
+sudo -E make install
 sudo ldconfig
+
+## Build libdispatch
+#echo -e "\n\n"
+#echo -e "${GREEN}Building libdispatch...${NC}"
+#cd ../libdispatch
+#rm -Rf build
+#mkdir build && cd build
+#../configure  --prefix=/usr
+#make
+#sudo make install
+#sudo ldconfig
 
 showPrompt
 
