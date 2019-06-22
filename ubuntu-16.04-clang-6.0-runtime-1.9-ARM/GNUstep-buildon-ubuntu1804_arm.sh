@@ -24,7 +24,6 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-#sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
 sudo apt -y install clang git cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
@@ -49,8 +48,7 @@ export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-#git clone https://github.com/nickhutchinson/libdispatch.git
-git clone https://github.com/plaurent/libdispatch.git
+git clone https://github.com/apple/swift-corelibs-libdispatch
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
   git checkout 1.9  # 2.0 and onward require clang8 or newer
