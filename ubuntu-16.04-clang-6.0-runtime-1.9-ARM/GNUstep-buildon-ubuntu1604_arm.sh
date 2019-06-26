@@ -26,7 +26,7 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
 sudo apt -y install clang git cmake libffi-dev libxml2-dev \
-libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
+libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
 if [ "$APPS" = true ] ; then
