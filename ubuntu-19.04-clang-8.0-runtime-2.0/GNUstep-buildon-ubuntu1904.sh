@@ -76,7 +76,7 @@ echo -e "${GREEN}Building GNUstep-make for the first time...${NC}"
 cd tools-make
 # git checkout `git rev-list -1 --first-parent --before=2017-04-06 master` # fixes segfault, should probably be looked at.
 #./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
-  CC=clang-8 ./configure \
+  CC=clang ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
@@ -125,7 +125,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the second time...${NC}"
 cd ../../tools-make
 #./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
-  CC=clang-8 ./configure \
+  CC=clang ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
