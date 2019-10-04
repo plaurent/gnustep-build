@@ -62,7 +62,7 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-sudo echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main deb-src http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main" > /etc/apt/sources.list.d/llvm.list
+sudo echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" > /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
 sudo apt -y remove clang

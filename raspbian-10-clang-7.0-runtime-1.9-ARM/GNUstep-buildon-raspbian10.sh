@@ -231,6 +231,16 @@ if [ "$APPS" = true ] ; then
 
   showPrompt
 
+  echo -e "${GREEN}Building PDFKit...${NC}"
+  cd ..
+  tar xzf PDFKit-1.0.1.tar.gz
+  cd PDFKit-1.0.1/
+  ./configure
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
   echo -e "\n\n"
   echo -e "${GREEN}Building GWorkspace...${NC}"
   cd ../apps-gworkspace/
