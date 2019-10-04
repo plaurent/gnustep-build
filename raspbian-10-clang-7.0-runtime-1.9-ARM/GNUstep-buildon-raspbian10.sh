@@ -99,6 +99,10 @@ export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
+cd swift-corelibs-libdispatch
+  git checkout swift-5.1.1-RELEASE 
+cd ..
+
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
   git checkout 1.9  # 2.0 and onward require clang8 or newer and do not support ARM yet
