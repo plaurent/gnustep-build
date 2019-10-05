@@ -21,7 +21,7 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
-export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
+export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -I/usr/local/include"
 export OBJCFLAGS="-fblocks"
 
 function installGNUstepMake()
@@ -50,10 +50,10 @@ NC=`tput sgr0` # No Color
 APPS=true
 
 # Set to true to also build and install some nice themes
-THEMES=false
+THEMES=true
 
 # Set to true to pause after each build to verify successful build and installation
-PROMPT=true
+PROMPT=false
 
 # Install Requirements
 sudo apt update
@@ -62,15 +62,16 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-sudo echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" > /etc/apt/sources.list.d/llvm.list
+echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main 
+deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" | sudo tee /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
 sudo apt -y remove clang
 DEBIAN_FRONTEND=noninteractive sudo apt -y install clang-8 liblldb-8 lld-8 build-essential git subversion \
-libpthread-workqueue0 libpthread-workqueue-dev \
+libpthread-workqueue0 libpthread-workqueue-dev libc6 libc6-dev \
 libxml2 libxml2-dev \
 libffi6 libffi-dev \
-libicu-dev \
+libicu-dev icu-devtools \
 libuuid1 uuid-dev uuid-runtime \
 libsctp1 libsctp-dev lksctp-tools \
 libavahi-core7 libavahi-core-dev \
@@ -103,9 +104,6 @@ libgnutls30 libgnutls28-dev \
 libpng-dev libpng16-16 \
 default-libmysqlclient-dev \
 libpq-dev \
-libstdc++-6-dev \
-gobjc-6 gobjc++-6 \
-gobjc++ \
 libgif7 libgif-dev libwings3 libwings-dev libwraster5 \
 libwraster-dev libwutil5 \
 libcups2-dev libicu57 libicu-dev \
@@ -116,11 +114,9 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-libstdc++-6-dev libstdc++-6-doc libstdc++-6-pic \
-libstdc++6 wmaker cmake xpdf
+wmaker cmake xpdf
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
-sudo rm /usr/lib/libobjc*
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -132,14 +128,12 @@ cd GNUstep-build
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-# Uncomment this if libkqueue is still needed
-wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
+#wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
   git checkout swift-5.1.1-RELEASE 
 cd ..
 
-git clone https://github.com/gnustep/scripts
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
 git clone https://github.com/gnustep/base
@@ -163,16 +157,7 @@ fi
 
 showPrompt
 
-# We compile libiconv. Debian comes standard with version 1.14 but there was an issue in 1.14
-# which got fixed in 1.15 which was relevant to us so using 1.15 is recommended.
-echo -e "\n\n"
-echo -e "${GREEN}Building libiconv...${NC}"
-tar -xvzf libiconv-1.15.tar.gz
-cd libiconv-1.15
-./configure --enable-static --enable-dynamic
-make clean
-make
-sudo -E make install
+cd make
 
 showPrompt
 
@@ -190,7 +175,7 @@ echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 
 showPrompt
 
-## Build libDIspatch
+## Build libDispatch
 echo -e "\n\n"
 echo -e "${GREEN}Building libdispatch...${NC}"
 cd ../swift-corelibs-libdispatch
@@ -247,14 +232,14 @@ sudo ldconfig
 showPrompt
 
 # Build GNUstep corebase
-#echo -e "\n\n"
-#echo -e "${GREEN}Building GNUstep corebase...${NC}"
-#cd ../corebase
-#make clean
-#./configure
-#make -j8
-#sudo -E make install
-#sudo ldconfig
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep corebase...${NC}"
+cd ../corebase
+make clean
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
 
 showPrompt
 
@@ -359,6 +344,7 @@ if [ "$THEMES" = true ] ; then
   echo -e "${GREEN}Installing NarcissusRik.theme...${NC}"
   cd ../NarcissusRik/
   sudo cp -R NarcissusRik.theme /usr/GNUstep/Local/Library/Themes/
+
 fi
 
 echo -e "\n\n"

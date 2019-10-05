@@ -116,6 +116,7 @@ git clone https://github.com/gnustep/libs-back.git
 if [ "$APPS" = true ] ; then
   git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
+  wget http://savannah.nongnu.org/download/gap/PDFKit-1.0.1.tar.gz
   git clone https://github.com/gnustep/apps-gworkspace.git
   git clone https://github.com/gnustep/apps-systempreferences.git
 fi
@@ -127,6 +128,7 @@ if [ "$THEMES" = true ] ; then
 fi
 
 showPrompt
+
 set -e
 # Build GNUstep make first time
 echo -e "\n\n"
