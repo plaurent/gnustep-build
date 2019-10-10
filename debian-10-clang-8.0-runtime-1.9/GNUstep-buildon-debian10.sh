@@ -18,7 +18,7 @@ function showPrompt()
 export CC=clang-8
 export CXX=clang++-8
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-export RUNTIME_VERSION=gnustep-2.0
+export RUNTIME_VERSION=gnustep-1.9
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
 export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib -I/usr/local/include"
@@ -136,8 +136,11 @@ cd ..
 
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
+cd libobjc2
+  git checkout 1.9  # 2.0 and onward require clang8 or newer and do not support ARM yet
+cd ..
 git clone https://github.com/gnustep/base
-git clone https://github.com/gnustep/corebase
+#git clone https://github.com/gnustep/corebase
 git clone https://github.com/gnustep/gui
 git clone https://github.com/gnustep/back
 
@@ -152,7 +155,7 @@ fi
 if [ "$THEMES" = true ] ; then
   git clone https://github.com/BertrandDekoninck/NarcissusRik.git
   git clone https://github.com/BertrandDekoninck/NesedahRik.git
-#  git clone https://github.com/BertrandDekoninck/rik.theme.git
+  git clone https://github.com/BertrandDekoninck/rik.theme.git
 fi
 
 showPrompt
@@ -169,8 +172,9 @@ echo $OBJCFLAGS
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo $LDFLAGS
 echo $OBJCFLAGS
-echo "export RUNTIME_VERSION=gnustep-2.0"  >> ~/.bashrc
+echo "export RUNTIME_VERSION=gnustep-1.9"  >> ~/.bashrc
 echo "export LD=/usr/bin/ld.gold" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin:/usr/GNUstep/Local/Library/Libraries/" >> ~/.bashrc
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 
 showPrompt
@@ -232,14 +236,14 @@ sudo ldconfig
 showPrompt
 
 # Build GNUstep corebase
-echo -e "\n\n"
-echo -e "${GREEN}Building GNUstep corebase...${NC}"
-cd ../corebase
-make clean
-./configure
-make -j8
-sudo -E make install
-sudo ldconfig
+#echo -e "\n\n"
+#echo -e "${GREEN}Building GNUstep corebase...${NC}"
+#cd ../corebase
+#make clean
+#./configure
+#make -j8
+#sudo -E make install
+#sudo ldconfig
 
 showPrompt
 
@@ -248,7 +252,7 @@ echo -e "\n\n"
 echo -e "${GREEN} Building GNUstep-gui...${NC}"
 cd ../gui
 make clean
-./configure
+./configure --disable-icu-config
 make -j8
 sudo -E make install
 sudo ldconfig
@@ -270,7 +274,7 @@ showPrompt
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
 export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
-ldconfig
+sudo ldconfig
 
 installGNUstepMake
 if [ "$APPS" = true ] ; then
@@ -317,19 +321,19 @@ if [ "$APPS" = true ] ; then
   make -j8
   sudo -E make install
 
+  sudo ldconfig
 fi
 
 if [ "$THEMES" = true ] ; then
 
   showPrompt
 
-#rik.theme build will fail currently, see README for details
-#  echo -e "\n\n"
-#  echo -e "${GREEN}Building rik.theme...${NC}"
-#  cd ../rik.theme/
-#  make clean
-#  make -j8
-#  sudo -E make install
+  echo -e "\n\n"
+  echo -e "${GREEN}Building rik.theme...${NC}"
+  cd ../rik.theme/
+  make clean
+  make -j8
+  sudo -E make install
 
   showPrompt
 
