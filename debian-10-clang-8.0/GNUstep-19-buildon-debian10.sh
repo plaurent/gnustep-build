@@ -227,8 +227,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-base...${NC}"
 cd ../base/
 make clean
-#./configure --with-config-file=/usr/local/etc/GNUstep/GNUstep.conf --with-libiconv-library=/usr/local/lib
-./configure --with-libiconv-library=/usr/local/lib
+./configure
 make -j8
 sudo -E make install
 sudo ldconfig
