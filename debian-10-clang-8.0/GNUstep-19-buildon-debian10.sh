@@ -53,7 +53,7 @@ APPS=true
 THEMES=true
 
 # Set to true to pause after each build to verify successful build and installation
-PROMPT=false
+PROMPT=true
 
 # Install Requirements
 sudo apt update
@@ -114,7 +114,7 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-wmaker cmake xpdf
+cmake xpdf
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
 
@@ -128,7 +128,6 @@ cd GNUstep-build
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-#wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
   git checkout swift-5.1.1-RELEASE 
@@ -137,7 +136,7 @@ cd ..
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
 cd libobjc2
-  git checkout 1.9  # 2.0 and onward require clang8 or newer and do not support ARM yet
+  git checkout 1.9  # 2.0 and onward require clang8 or newer and do not support ARM yet, 2.0 tends to be instable
 cd ..
 git clone https://github.com/gnustep/base
 #git clone https://github.com/gnustep/corebase
@@ -147,7 +146,7 @@ git clone https://github.com/gnustep/back
 if [ "$APPS" = true ] ; then
   git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
-  wget http://savannah.nongnu.org/download/gap/PDFKit-1.0.1.tar.gz
+  svn co http://svn.savannah.nongnu.org/svn/gap/trunk/libs/PDFKit/
   git clone https://github.com/gnustep/apps-gworkspace.git
   git clone https://github.com/gnustep/apps-systempreferences.git
 fi
@@ -294,9 +293,7 @@ if [ "$APPS" = true ] ; then
   showPrompt
 
   echo -e "${GREEN}Building PDFKit...${NC}"
-  cd ..
-  tar xzf PDFKit-1.0.1.tar.gz
-  cd PDFKit-1.0.1/
+  cd ../PDFKit/
   ./configure
   make -j8
   sudo -E make install

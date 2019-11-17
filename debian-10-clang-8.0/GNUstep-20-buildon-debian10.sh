@@ -114,7 +114,7 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-wmaker cmake xpdf
+cmake xpdf
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
 
@@ -128,7 +128,6 @@ cd GNUstep-build
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-#wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
   git checkout swift-5.1.1-RELEASE 
