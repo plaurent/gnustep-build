@@ -55,6 +55,10 @@ cd libdispatch
   git checkout fix_major_missing_symbol_for_ubuntu1904
 cd ..
 git clone https://github.com/gnustep/libobjc2.git
+cd libobjc2
+  git submodule sync
+  git submodule update
+cd ..
 git clone https://github.com/gnustep/tools-make.git
 git clone https://github.com/gnustep/libs-base.git
 git clone https://github.com/gnustep/libs-gui.git
