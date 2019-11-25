@@ -7,8 +7,8 @@ cat > guitest.m << EOF
 int main()
 {
   NSApplication *app = [NSApplication sharedApplication];
-  NSWindow* vc = [[AppDelegate alloc] init];
-  [app setDelegate: vc];
+  NSWindow* delegate = [[AppDelegate alloc] init];
+  [app setDelegate:delegate];
   [app run];
 }
 EOF
