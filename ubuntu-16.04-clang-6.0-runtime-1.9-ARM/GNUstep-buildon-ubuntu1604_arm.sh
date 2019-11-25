@@ -25,9 +25,16 @@ sudo apt update
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
-sudo apt -y install clang git cmake libffi-dev libxml2-dev \
+sudo apt -y install clang git libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
+
+wget https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
+tar xfz cmake-3.15.5.tar.gz
+cd cmake-3.15.5
+./bootstrap -- -DCMAKE_BUILD_TYPE:STRING=Release
+make
+sudo make install
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl

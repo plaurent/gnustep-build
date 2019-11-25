@@ -41,6 +41,7 @@ cd GNUstep-build
 # Set clang as compiler
 export CC=clang
 export CXX=clang++
+export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
@@ -55,6 +56,11 @@ cd libdispatch
   git checkout fix_major_missing_symbol_for_ubuntu1904
 cd ..
 git clone https://github.com/gnustep/libobjc2.git
+cd libobjc2
+  git submodule init
+  git submodule sync
+  git submodule update
+cd ..
 git clone https://github.com/gnustep/tools-make.git
 git clone https://github.com/gnustep/libs-base.git
 git clone https://github.com/gnustep/libs-gui.git
@@ -84,12 +90,14 @@ cd tools-make
                           --enable-install-ld-so-conf \
                               --with-library-combo=ng-gnu-gnu
 
-make -j8
+make -j24
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
+echo 'export CXXFLAGS="-std=c++11"' >> ~/.bashrc
+
 
 
 showPrompt
@@ -113,7 +121,7 @@ echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
 rm -Rf build
 mkdir build && cd build
-cmake ../ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
+cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
 cmake --build .
 sudo -E make install
 sudo ldconfig
@@ -133,7 +141,7 @@ cd ../../tools-make
                           --enable-install-ld-so-conf \
                               --with-library-combo=ng-gnu-gnu
 
-make -j8
+make -j24
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
@@ -145,7 +153,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-base...${NC}"
 cd ../libs-base/
 ./configure
-make -j8
+make -j24
 sudo -E make install
 
 showPrompt
@@ -155,7 +163,7 @@ echo -e "\n\n"
 echo -e "${GREEN} Building GNUstep-gui...${NC}"
 cd ../libs-gui
 ./configure
-make -j8
+make -j24
 sudo -E make install
 
 showPrompt
@@ -165,7 +173,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-back...${NC}"
 cd ../libs-back
 ./configure
-make -j8
+make -j24
 sudo -E make install
 
 showPrompt
@@ -175,14 +183,14 @@ showPrompt
 if [ "$APPS" = true ] ; then
   echo -e "${GREEN}Building ProjectCenter...${NC}"
   cd ../apps-projectcenter/
-  make -j8
+  make -j24
   sudo -E make install
 
   showPrompt
 
   echo -e "${GREEN}Building Gorm...${NC}"
   cd ../apps-gorm/
-  make -j8
+  make -j24
   sudo -E make install
 
   showPrompt
@@ -191,7 +199,7 @@ if [ "$APPS" = true ] ; then
   echo -e "${GREEN}Building GWorkspace...${NC}"
   cd ../apps-gworkspace/
   ./configure
-  make -j8
+  make -j24
   sudo -E make install
 
   showPrompt
@@ -199,7 +207,7 @@ if [ "$APPS" = true ] ; then
   echo -e "\n\n"
   echo -e "${GREEN}Building SystemPreferences...${NC}"
   cd ../apps-systempreferences/
-  make -j8
+  make -j24
   sudo -E make install
 
 fi
