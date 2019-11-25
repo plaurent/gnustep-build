@@ -90,7 +90,7 @@ cd tools-make
                           --enable-install-ld-so-conf \
                               --with-library-combo=ng-gnu-gnu
 
-make -j24
+make -j8
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
@@ -141,7 +141,7 @@ cd ../../tools-make
                           --enable-install-ld-so-conf \
                               --with-library-combo=ng-gnu-gnu
 
-make -j24
+make -j8
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
@@ -153,7 +153,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-base...${NC}"
 cd ../libs-base/
 ./configure
-make -j24
+make -j8
 sudo -E make install
 
 showPrompt
@@ -163,7 +163,7 @@ echo -e "\n\n"
 echo -e "${GREEN} Building GNUstep-gui...${NC}"
 cd ../libs-gui
 ./configure
-make -j24
+make -j8
 sudo -E make install
 
 showPrompt
@@ -173,7 +173,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-back...${NC}"
 cd ../libs-back
 ./configure
-make -j24
+make -j8
 sudo -E make install
 
 showPrompt
@@ -183,14 +183,14 @@ showPrompt
 if [ "$APPS" = true ] ; then
   echo -e "${GREEN}Building ProjectCenter...${NC}"
   cd ../apps-projectcenter/
-  make -j24
+  make -j8
   sudo -E make install
 
   showPrompt
 
   echo -e "${GREEN}Building Gorm...${NC}"
   cd ../apps-gorm/
-  make -j24
+  make -j8
   sudo -E make install
 
   showPrompt
@@ -199,7 +199,7 @@ if [ "$APPS" = true ] ; then
   echo -e "${GREEN}Building GWorkspace...${NC}"
   cd ../apps-gworkspace/
   ./configure
-  make -j24
+  make -j8
   sudo -E make install
 
   showPrompt
@@ -207,7 +207,7 @@ if [ "$APPS" = true ] ; then
   echo -e "\n\n"
   echo -e "${GREEN}Building SystemPreferences...${NC}"
   cd ../apps-systempreferences/
-  make -j24
+  make -j8
   sudo -E make install
 
 fi
