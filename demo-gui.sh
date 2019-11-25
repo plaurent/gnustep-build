@@ -2,21 +2,51 @@
 
 cat > guitest.m << EOF
 #import <AppKit/AppKit.h>
+#import "AppDelegate.h"
 
 int main()
 {
-  NSApplication *app;  // Without these 2 lines, seg fault may occur
-  app = [NSApplication sharedApplication];
+  NSApplication *app = [NSApplication sharedApplication];
+  NSWindow* vc = [[AppDelegate alloc] init];
+  [app setDelegate: vc];
+  [app run];
+}
+EOF
 
-  NSAlert * alert = [[NSAlert alloc] init];
+cat > AppDelegate.h << EOF
+#include <Foundation/Foundation.h>
+#include <AppKit/AppKit.h>
+
+@interface AppDelegate:NSWindow
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification;
+@end
+EOF
+
+cat > AppDelegate.m << EOF
+#include "AppDelegate.h"
+
+@implementation AppDelegate : NSWindow
+
+- (id)init {
+  return self;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification
+{
+  [self orderFront:self];
+  NSAlert* alert = [[NSAlert alloc] init];
   [alert setMessageText:@"Hello alert"];
   [alert addButtonWithTitle:@"All done"];
   int result = [alert runModal];
   if (result == NSAlertFirstButtonReturn) {
     NSLog(@"First button pressed");
   }
+  NSApplication* app = [NSApplication sharedApplication];
+  [app terminate:self];
 }
+@end
 EOF
+
 
 # ======================================================================
 # COMPILE USING THE FOLLOWING COMMAND LINES, OR CREATE A MAKEFILE
@@ -38,7 +68,7 @@ fi
 
 # Using COMMAND LINE
 echo "Compiling and running GUI + ARC demo (command line compilation)."
-${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m
+${CC} `gnustep-config --objc-flags` `gnustep-config --objc-libs` -lobjc -fobjc-arc -ldispatch -lgnustep-base -lgnustep-gui  guitest.m AppDelegate.m
 ./a.out
 
 # Using MAKEFILE
@@ -47,7 +77,7 @@ include \$(GNUSTEP_MAKEFILES)/common.make
 OBJCFLAGS = -fobjc-arc
 LDFLAGS = -ldispatch
 APP_NAME = GUITest
-GUITest_OBJC_FILES = guitest.m
+GUITest_OBJC_FILES = guitest.m AppDelegate.m
 include \$(GNUSTEP_MAKEFILES)/application.make
 EOF
 
