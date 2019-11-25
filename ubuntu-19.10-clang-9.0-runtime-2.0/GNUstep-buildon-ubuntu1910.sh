@@ -41,6 +41,7 @@ cd GNUstep-build
 # Set clang as compiler
 export CC=clang
 export CXX=clang++
+export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
