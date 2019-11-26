@@ -37,12 +37,12 @@ chmod +x DEBIAN/preinst
 
 cat > DEBIAN/postinst << EOF
 #!/bin/bash
-echo "|--------------[GNUstep Final Installation Steps]--------------------------------------"
-echo "| Adding the following 2 lines to system-wide bashrc (/etc/bash.bashrc)."
-echo "| Open a new terminal or source that script to use GNUstep."
-echo "| . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh"
-echo "| export RUNTIME_VERSION=gnustep-2.0"
-echo "--------------------------------------------------------------------------------------"
+echo " -------------[ GNUstep Final Installation Steps ]-------------------------------"
+echo "| Adding the following 2 lines to system-wide bashrc (/etc/bash.bashrc).         |"
+echo "| Open a new terminal, launch bash again, or source that script to use GNUstep.  |"
+echo "| . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh                             |"
+echo "| export RUNTIME_VERSION=gnustep-2.0                                             |"
+echo " --------------------------------------------------------------------------------"
 
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> /etc/bash.bashrc
 echo "export RUNTIME_VERSION=gnustep-2.0" >> /etc/bash.bashrc
