@@ -3,8 +3,7 @@
 # Script to build a GNUstep package based on what is built in gnustep-build
 # 
 # To install GNUstep on your system using the resulting package, you can do:
-#   sudo dpkg -i gnustep-binary_1.0-1.deb
-#   sudo apt install -f  # To get all the dependencies
+#   apt install ./gnustep-binary_1.0-1.deb
 # Then follow the instructions to set up your path and environment variables.
 
 PACKAGE_NAME="gnustep-binary"
@@ -67,6 +66,5 @@ cd /
 dpkg-deb --build ${PACKAGE_NAME}_${VERSION_CODE}
 
 echo "To install on a new Ubuntu system, use "
-echo " sudo dpkg -i ${PACKAGE_NAME}_${VERSION_CODE}.deb"
-echo " sudo apt install -f"
+echo "  apt install ./${PACKAGE_NAME}_${VERSION_CODE}.deb"
 echo "Then follow the instructions for your .bashrc and environment variables."
