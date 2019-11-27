@@ -24,11 +24,10 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
 sudo apt -y install clang git subversion cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
-libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev:i386 libxt-dev libxft-dev
+libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
