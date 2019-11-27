@@ -47,7 +47,7 @@ GREEN=`tput setaf 2`
 NC=`tput sgr0` # No Color
 
 # Set to true to also build and install apps
-APPS=true
+APPS=false
 
 # Set to true to also build and install some nice themes
 THEMES=true
