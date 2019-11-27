@@ -62,7 +62,7 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main 
+echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main
 deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" | sudo tee /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
@@ -130,7 +130,7 @@ cd GNUstep-build
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE 
+  git checkout swift-5.1.1-RELEASE
 cd ..
 
 git clone https://github.com/gnustep/make
