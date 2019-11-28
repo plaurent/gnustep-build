@@ -1,6 +1,6 @@
 # gnustep-build
 
-Ubuntu 19.04 and Ubuntu 16.04: [![Build Status](https://travis-ci.com/plaurent/gnustep-build.svg?branch=master)](https://travis-ci.com/plaurent/gnustep-build)
+All tested builds: [![Build Status](https://travis-ci.com/plaurent/gnustep-build.svg?branch=master)](https://travis-ci.com/plaurent/gnustep-build)
 
 Platform specific builds:
 
