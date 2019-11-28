@@ -2,7 +2,7 @@
 
 All tested builds: [![Build Status](https://travis-ci.com/plaurent/gnustep-build.svg?branch=master)](https://travis-ci.com/plaurent/gnustep-build)
 
-Platform specific builds:
+Platform specific build status:
 
 Platform     | CI Status
 -------------|:---------
