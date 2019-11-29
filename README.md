@@ -9,8 +9,8 @@ See `demo.sh` and `demo-gui.sh` for barebones examples.
 
 Platform specific build status:
 
-Platform     | CI Status
--------------|:---------
-Ubuntu 16.04 | [![Ubuntu 16.04 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=ubuntu1604&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
-Ubuntu 19.04 | [![Ubuntu 19.04 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=ubuntu1904&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
-Debian 10    | [![Debian 10 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=debian10&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
+Distribution | objc runtime | supports ARC | supports Blocks | installs clang | CI Status
+-------------|-----|-----|-----|-----|:---------
+Ubuntu 16.04 | 1.9 | yes | yes | 6.0 | [![Ubuntu 16.04 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=ubuntu1604&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
+Ubuntu 19.04 | 2.0 | yes | yes | 8.0 | [![Ubuntu 19.04 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=ubuntu1904&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
+Debian 10    | 2.0 | yes | yes | 8.0 |  [![Debian 10 Build Status](http://badges.herokuapp.com/travis/plaurent/gnustep-build?env=BADGE=debian10&label=build&branch=master)](https://travis-ci.org/plaurent/gnustep-build)
