@@ -3,11 +3,11 @@
 All tested builds: [![Build Status](https://travis-ci.com/plaurent/gnustep-build.svg?branch=master)](https://travis-ci.com/plaurent/gnustep-build)
 
 
-Scripts for building the latest GNUstep from source compatible with your favorite distributions.  Latest features include blocks and ARC, among others. 
+This repository contains scripts for building the latest GNUstep from source under your favorite distributions.  Tested features include blocks and ARC. 
 
 See `demo.sh` and `demo-gui.sh` for barebones examples. 
 
-Platform specific build status:
+Platform specific build status (on fresh installs of the distribution using Docker): 
 
 Distribution | objc runtime | supports ARC | supports Blocks | installs clang | CI Status
 -------------|-----|-----|-----|-----|:---------
