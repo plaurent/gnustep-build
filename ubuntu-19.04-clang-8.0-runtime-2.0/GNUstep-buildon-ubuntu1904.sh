@@ -38,8 +38,8 @@ mkdir GNUstep-build
 cd GNUstep-build
 
 # Set clang as compiler
-export CC=clang
-export CXX=clang++
+export CC=clang-8
+export CXX=clang++-8
 export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -81,7 +81,7 @@ echo -e "${GREEN}Building GNUstep-make for the first time...${NC}"
 cd tools-make
 # git checkout `git rev-list -1 --first-parent --before=2017-04-06 master` # fixes segfault, should probably be looked at.
 #./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
@@ -120,7 +120,7 @@ echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
 rm -Rf build
 mkdir build && cd build
-cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
+cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=$CC -DTESTS=OFF
 cmake --build .
 sudo -E make install
 sudo ldconfig
@@ -132,7 +132,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the second time...${NC}"
 cd ../../tools-make
 #./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
