@@ -25,7 +25,7 @@ sudo apt update
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
-sudo apt -y install clang-8 clang++-8 build-essential wget git cmake libffi-dev libxml2-dev \
+sudo apt -y install clang-8 clang++-8 build-essential wget git subversion cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
@@ -49,7 +49,6 @@ export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-#git clone https://github.com/nickhutchinson/libdispatch.git
 git clone https://github.com/plaurent/libdispatch.git
 cd libdispatch
   git checkout fix_major_missing_symbol_for_ubuntu1904
@@ -68,6 +67,7 @@ git clone https://github.com/gnustep/libs-back.git
 if [ "$APPS" = true ] ; then
   git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
+  svn co http://svn.savannah.nongnu.org/svn/gap/trunk/libs/PDFKit/
   git clone https://github.com/gnustep/apps-gworkspace.git
   git clone https://github.com/gnustep/apps-systempreferences.git
 fi
@@ -189,6 +189,14 @@ if [ "$APPS" = true ] ; then
 
   echo -e "${GREEN}Building Gorm...${NC}"
   cd ../apps-gorm/
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "${GREEN}Building PDFKit...${NC}"
+  cd ../PDFKit/
+  ./configure
   make -j8
   sudo -E make install
 
