@@ -8,6 +8,8 @@ jobs:
         - stage: test
         - script: docker build -t gnustep-clang-ubuntu1904 ubuntu-19.04-clang-8.0-runtime-2.0/testing/.;  docker run gnustep-clang-ubuntu1904 | grep -q "ARC is working"
           env: BADGE=ubuntu1904
+        - script: docker build -t gnustep-clang-ubuntu1910 ubuntu-19.10-clang-9.0-runtime-2.0/testing/.;  docker run gnustep-clang-ubuntu1910 | grep -q "ARC is working"
+          env: BADGE=ubuntu1910
         - script: BADGE=ubuntu1604 docker build -t gnustep-clang-ubuntu1604 ubuntu-16.04-clang-6.0-runtime-1.9/testing/.;  docker run gnustep-clang-ubuntu1604 | grep -q "ARC is working"
           env: BADGE=ubuntu1604
         - script: BADGE=debian10 docker build -t gnustep-clang-debian-10 debian-10-clang-8.0/testing/.;  docker run gnustep-clang-debian-10 | grep -q "ARC is working"
