@@ -25,7 +25,7 @@ sudo apt update
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
-sudo apt -y install clang-8 clang++-8 build-essential wget git subversion cmake libffi-dev libxml2-dev \
+sudo apt -y install clang-9 clang++-9 build-essential wget git subversion cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
@@ -38,8 +38,8 @@ mkdir GNUstep-build
 cd GNUstep-build
 
 # Set clang as compiler
-export CC=clang-8
-export CXX=clang++-8
+export CC=clang-9
+export CXX=clang++-9
 export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
