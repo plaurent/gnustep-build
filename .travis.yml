@@ -14,3 +14,5 @@ jobs:
           env: BADGE=ubuntu1604
         - script: BADGE=debian10 docker build -t gnustep-clang-debian-10 debian-10-clang-8.0/testing/.;  docker run gnustep-clang-debian-10 | grep -q "ARC is working"
           env: BADGE=debian10
+        - script: docker build -t gnustep-clang-ubuntu1910-libobjc2test ubuntu-19.10-clang-9.0-runtime-2.0/testing-libobjc2/.;  docker run gnustep-clang-ubuntu1910-libobjc2test | grep -q "100% tests passed"
+          env: BADGE=ubuntu1910-libobjc2test
