@@ -29,6 +29,10 @@ sudo apt -y install clang git libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
+# Set clang as compiler
+export CC=clang-6.0
+export CXX=clang++-6.0
+
 wget https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
 tar xfz cmake-3.15.5.tar.gz
 cd cmake-3.15.5
@@ -44,9 +48,6 @@ fi
 mkdir GNUstep-build
 cd GNUstep-build
 
-# Set clang as compiler
-export CC=clang
-export CXX=clang++
 export RUNTIME_VERSION=gnustep-1.9
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
