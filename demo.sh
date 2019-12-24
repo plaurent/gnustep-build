@@ -119,10 +119,12 @@ EOF
 if [ -x "$(command -v ${CC})" ]; then
   echo "Using CC from environment variable: ${CC}"
 else
-  if [ -x "$(command -v clang-8)" ]; then
-    CC=clang-8
-  elif [ -x "$(command -v clang-9)" ]; then
+  if [ -x "$(command -v clang-9)" ]; then
     CC=clang-9
+  elif [ -x "$(command -v clang-8)" ]; then
+    CC=clang-8
+  elif [ -x "$(command -v clang-6.0)" ]; then
+    CC=clang-6.0
   elif [ -x "$(command -v clang)" ]; then
     CC=clang
   else
