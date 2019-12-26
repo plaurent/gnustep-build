@@ -46,7 +46,7 @@ echo "export PATH=`pwd`/clang+llvm-9.0.0-aarch64-linux-gnu/bin/:\$PATH" >> ~/.ba
 export CC=clang-9
 export CXX=clang++-9
 
-wget https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
+wget --no-clobber https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
 tar xfz cmake-3.15.5.tar.gz
 cd cmake-3.15.5
 ./bootstrap -- -DCMAKE_BUILD_TYPE:STRING=Release
