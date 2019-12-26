@@ -32,7 +32,7 @@ echo “Getting updated libstdc++6 for GLIBCXX for clang9”
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt-get install gcc-4.9
-sudo apt-get upgrade libstdc++6
+sudo apt-get upgrade -y libstdc++6
 
 echo “Getting clang9 binaries for Aarch64”
 wget http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
