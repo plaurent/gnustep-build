@@ -35,8 +35,8 @@ sudo apt-get install gcc-4.9
 sudo apt-get upgrade -y libstdc++6
 
 echo “Getting clang9 binaries for Aarch64”
-wget http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
-tar xvfz clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
+wget --no-clobber http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
+tar xf clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
 ln -s clang+llvm-9.0.0-aarch64-linux-gnu/bin/clang-9 clang+llvm-9.0.0-aarch64-linux-gnu/bin/clang++-9
 
 export PATH=`pwd`/clang+llvm-9.0.0-aarch64-linux-gnu/bin/:$PATH
