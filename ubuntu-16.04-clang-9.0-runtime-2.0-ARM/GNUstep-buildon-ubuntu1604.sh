@@ -29,6 +29,7 @@ libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoco
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
 echo “Getting updated libstdc++6 for GLIBCXX for clang9”
+sudo apt-get install software-properties-common
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt-get install gcc-4.9
