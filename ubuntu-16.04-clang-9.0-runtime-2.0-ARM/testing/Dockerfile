@@ -8,4 +8,5 @@ RUN cp gnustep-build/ubuntu-16.04-clang-9.0-runtime-2.0-ARM/testing/Dockerfile .
 RUN chmod +x *.sh
 RUN /bin/bash -c "./GNUstep-buildon-ubuntu1604.sh"
 
-CMD [ "/bin/bash", "-c", "export PS1=allow_bash_to_run; source ~/.bashrc; ./demo.sh" ]
+CMD [ "/bin/bash" ] # , "-c", "export PS1=allow_bash_to_run; source ~/.bashrc; ./demo.sh" ]
+#CMD [ "/bin/bash", "-c", "export PS1=allow_bash_to_run; source ~/.bashrc; ./demo.sh" ]
