@@ -60,12 +60,14 @@ cd libobjc2
   git submodule update
 cd ..
 git clone https://github.com/gnustep/tools-make.git
-git clone https://github.com/gnustep/libs-base.git
+#git clone https://github.com/gnustep/libs-base.git
+git clone https://github.com/plaurent/libs-base.git
 git clone https://github.com/gnustep/libs-gui.git
 git clone https://github.com/gnustep/libs-back.git
 
 if [ "$APPS" = true ] ; then
-  git clone https://github.com/gnustep/apps-projectcenter.git
+  #git clone https://github.com/gnustep/apps-projectcenter.git
+  git clone https://github.com/plaurent/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
   svn co http://svn.savannah.nongnu.org/svn/gap/trunk/libs/PDFKit/
   git clone https://github.com/gnustep/apps-gworkspace.git
