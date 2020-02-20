@@ -14,7 +14,7 @@ GREEN=`tput setaf 2`
 NC=`tput sgr0` # No Color
 
 # Set to true to also build and install apps
-APPS=true
+APPS=false
 
 # Set to true to pause after each build to verify successful build and installation
 PROMPT=false
@@ -24,11 +24,10 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-sudo apt -y install clang git subversion cmake libffi-dev libxml2-dev \
+sudo apt -y install clang-9 clang++-9 build-essential wget git subversion cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
-libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev:i386 libxt-dev libxft-dev libxrandr-dev
+libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev libxrandr-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -39,8 +38,8 @@ mkdir GNUstep-build
 cd GNUstep-build
 
 # Set clang as compiler
-export CC=clang
-export CXX=clang++
+export CC=clang-9
+export CXX=clang++-9
 export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -52,7 +51,7 @@ export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE 
+  git checkout swift-5.1.1-RELEASE
 cd ..
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
@@ -82,7 +81,7 @@ echo -e "${GREEN}Building GNUstep-make for the first time...${NC}"
 cd tools-make
 # git checkout `git rev-list -1 --first-parent --before=2017-04-06 master` # fixes segfault, should probably be looked at.
 #./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
@@ -96,6 +95,7 @@ sudo -E make install
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
+echo 'export CXXFLAGS="-std=c++11"' >> ~/.bashrc
 
 
 showPrompt
@@ -122,7 +122,7 @@ echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
 rm -Rf build
 mkdir build && cd build
-cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
+cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=$CC -DTESTS=OFF
 cmake --build .
 sudo -E make install
 sudo ldconfig
@@ -134,7 +134,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the second time...${NC}"
 cd ../../tools-make
 #./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \

@@ -14,7 +14,7 @@ GREEN=`tput setaf 2`
 NC=`tput sgr0` # No Color
 
 # Set to true to also build and install apps
-APPS=false
+APPS=true
 
 # Set to true to pause after each build to verify successful build and installation
 PROMPT=false
@@ -24,17 +24,40 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-sudo apt-get update
 sudo apt -y install clang git libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
-wget https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
+echo “Getting updated libstdc++6 for GLIBCXX for clang9”
+sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install gcc-4.9
+sudo apt-get upgrade -y libstdc++6
+
+echo “Getting clang9 binaries for Aarch64”
+wget --no-clobber http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
+echo "Untarring/unxzipping (this step can take a while)..."
+tar xf clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
+cd clang+llvm-9.0.0-aarch64-linux-gnu/bin/
+ln -s clang-9 clang++-9
+cd ../../
+
+export PATH=`pwd`/clang+llvm-9.0.0-aarch64-linux-gnu/bin/:$PATH
+echo "export PATH=`pwd`/clang+llvm-9.0.0-aarch64-linux-gnu/bin/:\$PATH" >> ~/.bashrc
+
+echo $PATH
+# Set clang as compiler
+export CC=clang-9
+export CXX=clang++-9
+
+wget --no-clobber https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5.tar.gz
 tar xfz cmake-3.15.5.tar.gz
 cd cmake-3.15.5
 ./bootstrap -- -DCMAKE_BUILD_TYPE:STRING=Release
-make
+make -j4
 sudo make install
+cd ..
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -44,10 +67,7 @@ fi
 mkdir GNUstep-build
 cd GNUstep-build
 
-# Set clang as compiler
-export CC=clang
-export CXX=clang++
-export RUNTIME_VERSION=gnustep-1.9
+export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LD=/usr/bin/ld.gold
 export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
@@ -58,8 +78,11 @@ echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
-  git checkout 1.9  # 2.0 and onward require clang8 or newer
+ git submodule init
+ git submodule sync
+ git submodule update
 cd ..
+
 git clone https://github.com/gnustep/tools-make.git
 git clone https://github.com/gnustep/libs-base.git
 git clone https://github.com/gnustep/libs-gui.git
@@ -85,7 +108,7 @@ sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
-echo "export RUNTIME_VERSION=gnustep-1.9" >> ~/.bashrc
+echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
 
 showPrompt
 
@@ -99,7 +122,7 @@ cmake .. -DCMAKE_C_COMPILER=${CC} \
 	-DCMAKE_CXX_COMPILER=${CXX} \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_GOLD_LINKER=YES
-make
+make -j4
 sudo -E make install
 sudo ldconfig
 

@@ -24,11 +24,10 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-sudo apt -y install clang git cmake libffi-dev libxml2-dev \
+sudo apt -y install clang-8 clang++-8 build-essential wget git subversion cmake libffi-dev libxml2-dev \
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
-libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev:i386 libxt-dev libxft-dev libxrandr-dev
+libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev libxrandr-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -39,8 +38,8 @@ mkdir GNUstep-build
 cd GNUstep-build
 
 # Set clang as compiler
-export CC=clang
-export CXX=clang++
+export CC=clang-8
+export CXX=clang++-8
 export CXXFLAGS="-std=c++11"
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -50,7 +49,6 @@ export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-#git clone https://github.com/nickhutchinson/libdispatch.git
 git clone https://github.com/plaurent/libdispatch.git
 cd libdispatch
   git checkout fix_major_missing_symbol_for_ubuntu1904
@@ -69,6 +67,7 @@ git clone https://github.com/gnustep/libs-back.git
 if [ "$APPS" = true ] ; then
   git clone https://github.com/gnustep/apps-projectcenter.git
   git clone https://github.com/gnustep/apps-gorm.git
+  svn co http://svn.savannah.nongnu.org/svn/gap/trunk/libs/PDFKit/
   git clone https://github.com/gnustep/apps-gworkspace.git
   git clone https://github.com/gnustep/apps-systempreferences.git
 fi
@@ -82,7 +81,7 @@ echo -e "${GREEN}Building GNUstep-make for the first time...${NC}"
 cd tools-make
 # git checkout `git rev-list -1 --first-parent --before=2017-04-06 master` # fixes segfault, should probably be looked at.
 #./configure --enable-debug-by-default --with-layout=gnustep  --enable-objc-arc  --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
@@ -121,7 +120,7 @@ echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
 rm -Rf build
 mkdir build && cd build
-cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
+cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_ASM_COMPILER=$CC -DTESTS=OFF
 cmake --build .
 sudo -E make install
 sudo ldconfig
@@ -133,7 +132,7 @@ echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep-make for the second time...${NC}"
 cd ../../tools-make
 #./configure --enable-debug-by-default --with-layout=gnustep --enable-objc-arc --with-library-combo=ng-gnu-gnu
-  CC=clang ./configure \
+  CC=$CC ./configure \
           --with-layout=gnustep \
               --disable-importing-config-file \
                   --enable-native-objc-exceptions \
@@ -190,6 +189,14 @@ if [ "$APPS" = true ] ; then
 
   echo -e "${GREEN}Building Gorm...${NC}"
   cd ../apps-gorm/
+  make -j8
+  sudo -E make install
+
+  showPrompt
+
+  echo -e "${GREEN}Building PDFKit...${NC}"
+  cd ../PDFKit/
+  ./configure
   make -j8
   sudo -E make install
 

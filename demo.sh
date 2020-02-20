@@ -79,7 +79,6 @@ cat > Fraction.h << EOF
 -(int) numerator;
 -(int) denominator;
 @end
-
 EOF
 
 
@@ -108,28 +107,9 @@ cat > Fraction.m << EOF
    return numerator;
 }
 @end
-
 EOF
 
 
-
-cat > guitest.m << EOF
-#import <AppKit/AppKit.h>
-
-int main()
-{
-  NSApplication *app;  // Without these 2 lines, seg fault may occur
-  app = [NSApplication sharedApplication];
-
-  NSAlert * alert = [[NSAlert alloc] init];
-  [alert setMessageText:@"Hello alert"];
-  [alert addButtonWithTitle:@"All done"];
-  int result = [alert runModal];
-  if (result == NSAlertFirstButtonReturn) {
-    NSLog(@"First button pressed");
-  }
-}
-EOF
 
 # ======================================================================
 # COMPILE USING THE FOLLOWING COMMAND LINES, OR CREATE A MAKEFILE
@@ -139,8 +119,12 @@ EOF
 if [ -x "$(command -v ${CC})" ]; then
   echo "Using CC from environment variable: ${CC}"
 else
-  if [ -x "$(command -v clang-8)" ]; then
+  if [ -x "$(command -v clang-9)" ]; then
+    CC=clang-9
+  elif [ -x "$(command -v clang-8)" ]; then
     CC=clang-8
+  elif [ -x "$(command -v clang-6.0)" ]; then
+    CC=clang-6.0
   elif [ -x "$(command -v clang)" ]; then
     CC=clang
   else

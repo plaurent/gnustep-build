@@ -47,7 +47,7 @@ GREEN=`tput setaf 2`
 NC=`tput sgr0` # No Color
 
 # Set to true to also build and install apps
-APPS=true
+APPS=false
 
 # Set to true to also build and install some nice themes
 THEMES=true
@@ -62,13 +62,13 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main 
+echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main
 deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" | sudo tee /etc/apt/sources.list.d/llvm.list
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
 sudo apt -y remove clang
 DEBIAN_FRONTEND=noninteractive sudo apt -y install clang-8 liblldb-8 lld-8 build-essential git subversion \
-libpthread-workqueue0 libpthread-workqueue-dev libc6 libc6-dev \
+libc6 libc6-dev \
 libxml2 libxml2-dev \
 libffi6 libffi-dev \
 libicu-dev icu-devtools \
@@ -104,9 +104,9 @@ libgnutls30 libgnutls28-dev \
 libpng-dev libpng16-16 \
 default-libmysqlclient-dev \
 libpq-dev \
-libgif7 libgif-dev libwings3 libwings-dev libwraster5 \
+libgif7 libgif-dev libwings3 libwings-dev \
 libwraster-dev libwutil5 \
-libcups2-dev libicu57 libicu-dev \
+libcups2-dev libicu63 libicu-dev \
 xorg \
 libfreetype6 libfreetype6-dev \
 libpango1.0-dev \
@@ -130,11 +130,16 @@ cd GNUstep-build
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE 
+  git checkout swift-5.1.1-RELEASE
 cd ..
 
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
+cd libobjc2
+  git submodule init
+  git submodule sync
+  git submodule update
+cd ..
 git clone https://github.com/gnustep/base
 #git clone https://github.com/gnustep/corebase
 git clone https://github.com/gnustep/gui
