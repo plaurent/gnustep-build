@@ -77,7 +77,7 @@ libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
 libstdc++-6-dev libstdc++-6-doc libstdc++-6-pic \
-libstdc++6 cmake xpdf
+libstdc++6 cmake xpdf libxrandr-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
