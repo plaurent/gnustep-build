@@ -173,7 +173,7 @@ echo $OBJCFLAGS
 echo $LDFLAGS
 echo $OBJCFLAGS
 echo "export PATH=/usr/GNUstep/System/Tools:/usr/GNUstep/Local/Tools:$PATH" >> ~/.bashrc
-echo "export RUNTIME_VERSION=gnustep-2.0" >> ~/.bashrc
+echo "export RUNTIME_VERSION=$RUNTIME_VERSION" >> ~/.bashrc
 echo "export LD=/usr/bin/ld.gold" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin:/usr/GNUstep/Local/Library/Libraries/" >> ~/.bashrc
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc

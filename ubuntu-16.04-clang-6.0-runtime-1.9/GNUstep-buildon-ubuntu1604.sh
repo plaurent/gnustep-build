@@ -89,7 +89,7 @@ sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
-echo "export RUNTIME_VERSION=gnustep-1.9" >> ~/.bashrc
+echo "export RUNTIME_VERSION=$RUNTIME_VERSION" >> ~/.bashrc
 
 showPrompt
 
