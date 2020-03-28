@@ -136,12 +136,17 @@ echo -e "\n\n${GREEN}Checking out sources...${NC}"
 wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 git clone https://github.com/apple/swift-corelibs-libdispatch
 cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE 
+  git checkout swift-5.1.1-RELEASE
 cd ..
 
 git clone https://github.com/gnustep/scripts
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
+cd libobjc2
+  git submodule init
+  git submodule sync
+  git submodule update
+cd ..
 git clone https://github.com/gnustep/base
 git clone https://github.com/gnustep/corebase
 git clone https://github.com/gnustep/gui
