@@ -34,7 +34,6 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt-get install -y gcc-4.9
 sudo apt-get install -y libstdc++6
-read -p "paused for error"
 echo “Getting clang9 binaries for Aarch64”
 wget --no-clobber http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
 echo "Untarring/unxzipping (this step can take a while)..."
