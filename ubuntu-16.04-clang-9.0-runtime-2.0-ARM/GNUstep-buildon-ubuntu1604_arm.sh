@@ -29,12 +29,12 @@ libgnutls28-dev libicu-dev libblocksruntime-dev  libpthread-workqueue-dev autoco
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
 echo “Getting updated libstdc++6 for GLIBCXX for clang9”
-sudo apt-get install software-properties-common
+sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update
-sudo apt-get install gcc-4.9
-sudo apt-get upgrade -y libstdc++6
-
+sudo apt-get install -y gcc-4.9
+sudo apt-get install -y libstdc++6
+read -p "paused for error"
 echo “Getting clang9 binaries for Aarch64”
 wget --no-clobber http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-aarch64-linux-gnu.tar.xz
 echo "Untarring/unxzipping (this step can take a while)..."
@@ -55,7 +55,7 @@ wget --no-clobber https://github.com/Kitware/CMake/releases/download/v3.15.5/cma
 tar xfz cmake-3.15.5.tar.gz
 cd cmake-3.15.5
 ./bootstrap -- -DCMAKE_BUILD_TYPE:STRING=Release
-make -j4
+make -j2
 sudo make install
 cd ..
 
@@ -122,7 +122,7 @@ cmake .. -DCMAKE_C_COMPILER=${CC} \
 	-DCMAKE_CXX_COMPILER=${CXX} \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_GOLD_LINKER=YES
-make -j4
+make -j2
 sudo -E make install
 sudo ldconfig
 
