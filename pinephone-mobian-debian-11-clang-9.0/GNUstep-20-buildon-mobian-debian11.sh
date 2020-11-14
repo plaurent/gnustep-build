@@ -1,9 +1,7 @@
 #!/bin/bash
 
-## Script to install the newest available version of GNUstep on Debian stable (stretch)
-## based on the script for Ubuntu, originating from http://wiki.gnustep.org/index.php/GNUstep_under_Ubuntu_Linux.
-
-## This script installs GNUstep, but GWorkspace is for unknown reason not working currently.
+## Script for building and installing GNUstep from source
+## on Mobian (e.g., PinePhone)
 
 # Show prompt function
 function showPrompt()
@@ -60,17 +58,13 @@ sudo apt update
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
-sudo dpkg --add-architecture i386  # Enable 32-bit repos for libx11-dev:i386
 sudo apt-get update
-echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main
-deb-src http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main" | sudo tee /etc/apt/sources.list.d/llvm.list
-wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+
 sudo apt-get update
-sudo apt -y remove clang
 DEBIAN_FRONTEND=noninteractive sudo apt -y install clang-9 liblldb-9 lld-9 build-essential git subversion \
 libc6 libc6-dev \
 libxml2 libxml2-dev \
-libffi6 libffi-dev \
+libffi7 libffi-dev \
 libicu-dev icu-devtools \
 libuuid1 uuid-dev uuid-runtime \
 libsctp1 libsctp-dev lksctp-tools \
@@ -92,7 +86,7 @@ libgl1-mesa-dev \
 libpcap-dev \
 libc-dev libc++-dev libc++1 \
 python-dev swig \
-libedit-dev libeditline0 libeditline-dev \
+libedit-dev \
 binfmt-support libtinfo-dev \
 bison flex m4 wget \
 libicns1 libicns-dev \
@@ -106,7 +100,7 @@ default-libmysqlclient-dev \
 libpq-dev \
 libgif7 libgif-dev libwings3 libwings-dev \
 libwraster-dev libwutil5 \
-libcups2-dev libicu63 libicu-dev \
+libcups2-dev libicu67 libicu-dev \
 xorg \
 libfreetype6 libfreetype6-dev \
 libpango1.0-dev \
@@ -114,7 +108,7 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-cmake xpdf libxrandr-dev
+cmake libxrandr-dev
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
 
