@@ -25,20 +25,11 @@ PROMPT=false
 # Install Requirements
 sudo apt update
 
-echo -e "\n\n${GREEN}Installing clang...${NC}"
-
-wget http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz
-tar -xvf clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz
-rm clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz
-mv clang+llvm-9.0.0-armv7a-linux-gnueabihf clang_9.0.0
-sudo mv clang_9.0.0 /usr/local
-export PATH=/usr/local/clang_9.0.0/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/clang_9.0.0/lib:$LD_LIBRARY_PATH
 
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
-sudo apt -y install build-essential git subversion \
+sudo apt -y install build-essential git subversion clang-9 \
 libpthread-workqueue0 libpthread-workqueue-dev \
 libxml2 libxml2-dev \
 libffi6 libffi-dev \
@@ -76,8 +67,8 @@ mkdir GNUstep-build
 cd GNUstep-build
 
 # Set clang as compiler
-export CC=clang
-export CXX=clang++
+export CC=clang-9
+export CXX=clang++-9
 export RUNTIME_VERSION=gnustep-2.1
 export LD=/usr/bin/ld.gold
 export LDFLAGS="-fuse-ld=gold -L/usr/local/lib"
@@ -114,8 +105,7 @@ sudo -E make install
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
 echo "export RUNTIME_VERSION=$RUNTIME_VERSION" >> ~/.bashrc
-echo 'export PATH=/usr/local/clang_9.0.0/bin:$PATH' >> ~/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/clang_9.0.0/lib:$LD_LIBRARY_PATH' >>~/.bashrc
+
 
 showPrompt
 
@@ -141,7 +131,7 @@ echo -e "${GREEN}Building libobjc2...${NC}"
 cd ../../libobjc2
 rm -Rf build
 mkdir build && cd build
-cmake ../ -DENABLE_OBJCXX=NO  -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_ASM_COMPILER=clang -DTESTS=OFF
+cmake ../ -DCMAKE_C_COMPILER=clang-9 -DCMAKE_CXX_COMPILER=clang++-9 -DCMAKE_ASM_COMPILER=clang-9 -DTESTS=OFF
 cmake --build .
 sudo -E make install
 sudo ldconfig
