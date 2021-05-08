@@ -1,5 +1,6 @@
 FROM ubuntu:20.10
 
+RUN uname -a
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /dev/timezone
 RUN apt-get update && apt-get install -y git sudo
