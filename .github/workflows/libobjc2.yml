@@ -10,5 +10,5 @@ jobs:
         uses: actions/checkout@master
       - name: Execute test script
         run: |
-          cd ubuntu-20.10-clang-11.0-runtime-2.0
+          cd ubuntu-20.04-clang-11.0-runtime-2.0
           sh ./test-libobjc2.sh
