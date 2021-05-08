@@ -1,0 +1,14 @@
+on:
+  [push]
+name: GNUstep on debian-10-clang-8.0-runtime-2.0
+jobs:
+  testbuild:
+    name: Building GNUstep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@master
+      - name: Execute test script
+        run: |
+          cd debian-10-clang-8.0
+          sh ./test.sh

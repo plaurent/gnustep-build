@@ -1,0 +1,14 @@
+on:
+  [push]
+name: GNUstep on ubuntu-20.04-clang-10.0-runtime-2.0
+jobs:
+  testbuild:
+    name: Building GNUstep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@master
+      - name: Execute test script
+        run: |
+          cd ubuntu-20.04-clang-10.0-runtime-2.0
+          sh ./test.sh

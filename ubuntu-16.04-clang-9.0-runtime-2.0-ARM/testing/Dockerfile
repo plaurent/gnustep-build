@@ -1,5 +1,6 @@
 FROM ubuntu:16.04
 
+RUN uname -a
 RUN apt-get update && apt-get install -y clang build-essential wget git sudo
 RUN git clone https://github.com/plaurent/gnustep-build
 RUN cp gnustep-build/*.sh .
