@@ -5,6 +5,7 @@ jobs:
   testbuild:
     name: Building GNUstep
     runs-on: ubuntu-latest
+    container: ubuntu:16.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@master
