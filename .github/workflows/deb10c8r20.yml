@@ -1,6 +1,6 @@
 on:
   [push]
-name: GNUstep on debian-10-clang-8.0-runtime-2.0
+name: GNUstep on Debian 10
 jobs:
   testbuild:
     name: Building GNUstep

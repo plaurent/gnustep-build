@@ -1,6 +1,6 @@
 on:
   [push]
-name: GNUstep on ubuntu-20.10-clang-11.0-runtime-2.0
+name: GNUstep on Ubuntu 20.10
 jobs:
   testbuild:
     name: Building GNUstep
