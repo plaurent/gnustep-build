@@ -1,0 +1,31 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-gui
+pkgver=0.28.0
+pkgrel=1
+pkgdesc="The GNUstep GUI class library, using the next generation objc runtime (libobjc2)"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/"
+license=('LGPL')
+depends=('flite' 'libtiff' 'libjpeg' 'libpng' 'aspell' 'libcups' 'audiofile' 'libsndfile' 'giflib' 'libao' 'gnustep-ngr-base' 'gnustep-ngr-make')
+makedepends=(clang)
+conflicts=('gnustep-gui-svn' 'gnustep-gui' 'gnustep-gui-ngr-git')
+options=(debug strip)
+groups=('gnustep-ngr-gui')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  ./configure
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

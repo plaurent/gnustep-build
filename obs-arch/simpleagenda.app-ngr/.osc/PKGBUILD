@@ -1,0 +1,33 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=simpleagenda.app-ngr
+_pkgname=SimpleAgenda
+pkgver=0.44
+pkgrel=0
+pkgdesc="SimpleAgenda is an easy to use agenda and calendar application supporting events/appointments and tasks."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://wiki.gnustep.org/index.php/SimpleAgenda.app"
+license=('GPL')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back' 'addresses.app-ngr' 'gnustep-ngr-libical=0.48' 'gnustep-ngr-dbuskit')
+makedepends=('gnustep-ngr-make' 'clang')
+provides=('simpleagenda.app')
+conflicts=('simpleagenda.app')
+options=(debug strip)
+install="simpleagenda.install"
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  CC=clang CXX=clang++ CPATH=`gnustep-config --variable=GNUSTEP_SYSTEM_HEADERS` make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

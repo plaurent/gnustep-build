@@ -1,0 +1,39 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=pikopixel.app-ngr
+_pkgname=PikoPixel
+pkgver=1.0~b10
+pkgsourcepkg="PikoPixel.Sources.1.0-b10"
+pkgrel=1
+pkgdesc="A free, open-source GNUstep application for drawing & editing pixel-art images."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://twilightedge.com/mac/pikopixel/"
+license=('AGPL3')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back')
+makedepends=('gnustep-ngr-make' 'clang')
+options=(debug strip)
+provides=('pikopixel.app')
+conflicts=('pikopixel.app')
+install='pikopixel.install'
+source=("${pkgsourcepkg}.tar.gz" 'GNUmakefile.patch')
+sha512sums=('45f3d347fee628ffea469d29273bb9d9ba8946fd5c2cece3fd7bac2fbfc2971a1ae2424f45609ec0236e1479aaa0e31ad84b299ab08470f85fa04ef72ab18255' '0456796b6ad2ae749c3585af000b66b69d9df9ff1a0ce941982efa2c166fc7b67dc364d886913409821b73b2d50b8a299a8b28d4b9936cf5af47bd7459460ee2')
+
+prepare () {
+    cd ${pkgsourcepkg}/PikoPixel
+	patch -p1 < "${srcdir}/GNUmakefile.patch"
+}
+
+build() {
+  cd ${pkgsourcepkg}/PikoPixel
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgsourcepkg}/PikoPixel
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

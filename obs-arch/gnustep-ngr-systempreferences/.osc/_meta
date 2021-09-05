@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-systempreferences" project="home:letterus:gnustep-ngr">
+  <title>SystemPreferences</title>
+  <description>An application which allows to manage the settings of many aspects of the gnustep environment and its applications.</description>
+</package>
+

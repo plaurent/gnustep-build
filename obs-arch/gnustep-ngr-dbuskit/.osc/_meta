@@ -1,0 +1,7 @@
+<package name="gnustep-ngr-dbuskit" project="home:letterus:gnustep-ngr">
+  <title>DBusKit</title>
+  <description>The DBusKit framework provides Objective-C applications with bindings
+for the D-Bus inter-process communication system.  It allows Objective-C
+applications to transparently access services exposed via D-Bus.</description>
+</package>
+

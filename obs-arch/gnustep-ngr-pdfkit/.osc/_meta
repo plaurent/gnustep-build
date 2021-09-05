@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-pdfkit" project="home:letterus:gnustep-ngr">
+  <title>PDFKit</title>
+  <description>PDFKit is a PDF rendering framework which embeds xpdf.</description>
+</package>
+

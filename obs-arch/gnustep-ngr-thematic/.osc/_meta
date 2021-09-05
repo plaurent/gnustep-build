@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-thematic" project="home:letterus:gnustep-ngr">
+  <title>Thematic.app</title>
+  <description>Application for creating image-only themes for GNUstep.</description>
+</package>
+

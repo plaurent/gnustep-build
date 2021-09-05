@@ -1,0 +1,6 @@
+<package name="timetracker.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>TimeTracker.app</title>
+  <description>A simple time tracking app.</description>
+  <url>https://github.com/Letterus/app-time-tracker</url>
+</package>
+

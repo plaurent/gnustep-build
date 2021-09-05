@@ -1,0 +1,5 @@
+<package name="sombre.theme" project="home:letterus:gnustep-ngr">
+  <title>Sombre Theme</title>
+  <description>A dark theme for GNUstep by Bertrand Dekoninck.</description>
+</package>
+

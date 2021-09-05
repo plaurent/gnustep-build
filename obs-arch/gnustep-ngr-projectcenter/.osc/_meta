@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-projectcenter" project="home:letterus:gnustep-ngr">
+  <title>ProjectCenter</title>
+  <description>GNUstep's integrated development environment (IDE).</description>
+</package>
+

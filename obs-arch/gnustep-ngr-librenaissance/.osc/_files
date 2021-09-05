@@ -1,0 +1,5 @@
+<directory name="gnustep-ngr-librenaissance" rev="7" vrev="7" srcmd5="3b13575c6b1227606e5091ca75474136">
+  <serviceinfo code="succeeded" xsrcmd5="aa443c92555f08fbd9bd7592de519772" />
+  <entry name="PKGBUILD" md5="f3adc883dd2ac190c38620122ebeccec" size="945" mtime="1614258184" />
+  <entry name="_service" md5="0fb96e188ab863df02a786f68db61db6" size="488" mtime="1614166684" />
+</directory>

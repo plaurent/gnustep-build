@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-gorm" project="home:letterus:gnustep-ngr">
+  <title>GORM</title>
+  <description>GNUstep's easy-to-use interface designer</description>
+</package>
+

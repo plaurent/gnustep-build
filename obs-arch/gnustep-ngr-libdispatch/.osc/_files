@@ -1,0 +1,7 @@
+<directory name="gnustep-ngr-libdispatch" rev="15" vrev="15" srcmd5="5f5e5c7fc534895492afb83e91cc054d">
+  <serviceinfo code="succeeded" xsrcmd5="397f7815dc3a3ff333f1983eab914227" />
+  <entry name="PKGBUILD" md5="00197dfdb81917ac98b14497153372bf" size="1987" mtime="1614257372" />
+  <entry name="_service" md5="79c9ea5fe1f083ff5187d0dc40884512" size="558" mtime="1614255895" />
+  <entry name="avoid-libkqueue.patch" md5="5e0fc1569652de4666226714516ff889" size="333" mtime="1606335345" />
+  <entry name="remove-werror.patch" md5="17161cc9b370567a7915b36c761763a8" size="576" mtime="1606335345" />
+</directory>

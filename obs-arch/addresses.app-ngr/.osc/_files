@@ -1,0 +1,6 @@
+<directory name="addresses.app-ngr" rev="8" vrev="8" srcmd5="692c8927d0742f7eb2c7dd267552edc5">
+  <serviceinfo code="succeeded" xsrcmd5="2dea527504639554f1dac04bf0ab1848" />
+  <entry name="PKGBUILD" md5="4a7ab4aede6a3ef251836e24c81ff18e" size="1179" mtime="1614258046" />
+  <entry name="_service" md5="4360f7fee1146b34395fe54d768e813d" size="496" mtime="1614166511" />
+  <entry name="addresses.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1606684021" />
+</directory>

@@ -1,0 +1,15 @@
+<services>
+  <service name="tar_scm">
+    <param name="scm">git</param>
+    <param name="url">https://github.com/apple/swift-corelibs-libdispatch.git</param>
+    <param name="revision">refs/tags/swift-5.3.3-RELEASE</param>
+    <param name="versionformat">git%cd~%h</param>
+    <param name="versionprefix">5.3.3.3</param>
+    <param name="filename">gnustep-ngr-libdispatch</param>
+  </service>
+  <service name="recompress">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service name="set_version"/>
+</services>

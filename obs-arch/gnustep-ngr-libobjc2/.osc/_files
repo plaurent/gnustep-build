@@ -1,0 +1,5 @@
+<directory name="gnustep-ngr-libobjc2" rev="13" vrev="13" srcmd5="5b880b1f3519102835fb9598b12f5902">
+  <serviceinfo code="succeeded" xsrcmd5="a749a01c3034dc1f30d7a7c088ef69bf" />
+  <entry name="PKGBUILD" md5="2cf4a18703e15b54fe97d7d77724607c" size="1235" mtime="1606678983" />
+  <entry name="_service" md5="f9e618339fbd4709cacc74d60676a3ea" size="472" mtime="1616948031" />
+</directory>

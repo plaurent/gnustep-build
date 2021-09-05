@@ -1,0 +1,27 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-dbuskit
+pkgver=0.1.1.0
+pkgrel=1
+pkgdesc="The DBusKit framework provides Objective-C applications with bindings for the D-Bus inter-process communication system. It allows Objective-C applications to transparently access services exposed via D-Bus."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="https://github.com/gnustep/libs-dbuskit"
+license=('LGPL')
+groups=('gnustep-ngr-gui')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'dbus' 'clang') # clang for debugging
+makedepends=('gnustep-ngr-make' 'clang')
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  CC=clang CXX=clang++ CPP=clang++ make debug=yes nonstrict=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

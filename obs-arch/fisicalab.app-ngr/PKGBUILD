@@ -1,0 +1,43 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=fisicalab.app-ngr
+_pkgname=FisicaLab
+pkgver=0.3.4
+pkgrel=0
+pkgdesc="An educational application to solve physics problems. Its main objective is let the user to focus in physics concepts, leaving aside the mathematical details (FisicaLab take care of them)."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="https://www.gnu.org/software/fisicalab/"
+license=('GPL')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back' 'gnustep-ngr-librenaissance' 'gsl')
+makedepends=('gnustep-ngr-make' 'clang' 'autoconf')
+options=(debug strip)
+provides=('fisicalab.app')
+conflicts=('fisicalab.app')
+install="fisicalab.install"
+source=("${pkgname}-${pkgver}.tar.xz"
+        configure.ac.diff)
+sha512sums=('SKIP' '3664e92096d5ecbb1dd283c7d99db7256267da97076aaaabbec98fe6c508f4a6bef3b64636f12d46f71442db031b83500ea87cf59d8bab9fa34fee13c03fe0af')
+
+prepare () {
+    cd "${pkgname}-${pkgver}"
+	patch -p0 < "${srcdir}/configure.ac.diff"
+	autoconf
+}
+
+build() {
+  cd ${pkgname}-${pkgver}
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}  
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  ./configure --with-gnustep-gui --with-renaissance
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i -e 's/Local/System/g' -e 's/.tiff/.tif/g' -e 's/í/i/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

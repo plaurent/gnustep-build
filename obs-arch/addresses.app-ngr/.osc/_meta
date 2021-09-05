@@ -1,0 +1,5 @@
+<package name="addresses.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>Addresses</title>
+  <description>A versatile Address Book application and framework.</description>
+</package>
+

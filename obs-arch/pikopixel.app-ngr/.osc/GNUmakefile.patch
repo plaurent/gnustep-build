@@ -1,0 +1,11 @@
+--- PikoPixel.orig/GNUmakefile	2020-10-29 00:34:11.000000000 +0100
++++ PikoPixel/GNUmakefile	2021-03-05 22:10:31.591465490 +0100
+@@ -7,7 +7,7 @@
+ 
+ PikoPixel_APPLICATION_ICON = GNUstepAppIcon.png
+ 
+-PikoPixel_OBJC_PRECOMPILED_HEADERS = PikoPixel_Prefix.pch
++#PikoPixel_OBJC_PRECOMPILED_HEADERS = PikoPixel_Prefix.pch
+ 
+ PikoPixel_OBJC_FILES = \
+     main.m \

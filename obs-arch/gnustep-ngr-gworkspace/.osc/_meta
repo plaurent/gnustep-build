@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-gworkspace" project="home:letterus:gnustep-ngr">
+  <title>The GNUstep Workspace</title>
+  <description/>
+</package>
+

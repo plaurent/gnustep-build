@@ -1,0 +1,6 @@
+<package name="dictionaryreader.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>Dictionary Reader</title>
+  <description>A dictionary reader for dict protocol online and locally.</description>
+  <url>https://github.com/Letterus/DictionaryReader</url>
+</package>
+

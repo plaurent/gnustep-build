@@ -1,0 +1,7 @@
+<services>
+ <service name="download_url">
+   <param name="protocol">http</param>
+   <param name="host">twilightedge.com</param>
+   <param name="path">downloads/PikoPixel.Sources.1.0-b10.tar.gz</param>
+ </service>
+</services>

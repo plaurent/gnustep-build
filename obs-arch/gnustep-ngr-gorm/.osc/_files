@@ -1,0 +1,6 @@
+<directory name="gnustep-ngr-gorm" rev="9" vrev="9" srcmd5="9bb6ee57f9a30937cc7109d33d9ba6c8">
+  <serviceinfo code="succeeded" xsrcmd5="12925b02786c03ea836b25ac9caa066b" />
+  <entry name="PKGBUILD" md5="2e9fbfa09179ea276c2b0daebf419daf" size="1140" mtime="1614257985" />
+  <entry name="_service" md5="b660b726fa3a51c8c10fac0e66c17f5a" size="472" mtime="1614166446" />
+  <entry name="gorm.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1606682451" />
+</directory>

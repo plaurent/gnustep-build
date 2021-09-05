@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-back" project="home:letterus:gnustep-ngr">
+  <title>The GNUstep GUI Backend</title>
+  <description>Drawing library for GUI applications using Cairo as engine</description>
+</package>
+

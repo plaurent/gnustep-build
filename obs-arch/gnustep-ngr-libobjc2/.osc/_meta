@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-libobjc2" project="home:letterus:gnustep-ngr">
+  <title>GNUstep Objective C Runtime Library</title>
+  <description>Objective-C runtime library intended for use with Clang. This is the next generation runtime of the GNUstep project (ngr).</description>
+</package>
+

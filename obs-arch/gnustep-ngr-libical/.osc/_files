@@ -1,0 +1,4 @@
+<directory name="gnustep-ngr-libical" rev="7" vrev="7" srcmd5="53a2653e6cedb48047302fb27cbefa44">
+  <entry name="PKGBUILD" md5="352927cde4a57a7ee372777b0357c7df" size="1050" mtime="1614269812" />
+  <entry name="libical-0.48.tar.gz" md5="731e4d7805b9c7d9b97a9f4755588acb" size="1151210" mtime="1607279845" />
+</directory>

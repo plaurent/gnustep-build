@@ -1,0 +1,7 @@
+<directory name="fisicalab.app-ngr" rev="31" vrev="31" srcmd5="5cf19a7e48636aa0561845288ce10c3d">
+  <serviceinfo code="succeeded" xsrcmd5="0197351e5090958856b9ab62cb6f3db7" />
+  <entry name="PKGBUILD" md5="89c7934d4bd070fd6f30aa85dab3e632" size="1771" mtime="1614270118" />
+  <entry name="_service" md5="6d922178249bf6f75c36254ec702e91b" size="476" mtime="1614269236" />
+  <entry name="configure.ac.diff" md5="ec163fae0e46f5834c852795f99efc38" size="3883" mtime="1607291819" />
+  <entry name="fisicalab.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1607284917" />
+</directory>

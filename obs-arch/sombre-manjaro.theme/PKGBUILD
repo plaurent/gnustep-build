@@ -1,0 +1,28 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=sombre-manjaro.theme
+_pkgname=SombreManjaro.theme
+pkgver=0.2.1
+pkgrel=0
+pkgdesc="A dark theme for GNUstep by Bertrand Dekoninck, integrated with Manjaro."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="https://github.com/Letterus/Sombre/tree/manjaro_binary"
+license=('GPLv3')
+groups=('gnustep-ngr-desktop')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back')
+makedepends=('gnustep-ngr-make' 'clang')
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

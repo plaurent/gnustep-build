@@ -1,0 +1,14 @@
+<services>
+  <service name="tar_scm">
+    <param name="scm">svn</param>
+    <param name="url">http://svn.savannah.gnu.org/svn/fisicalab/trunk</param>
+    <param name="versionformat">svn~%r</param>
+    <param name="versionprefix">0.3.5.5</param>
+    <param name="filename">fisicalab.app-ngr</param>
+  </service>
+  <service name="recompress">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service name="set_version"/>
+</services>

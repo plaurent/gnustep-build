@@ -1,0 +1,6 @@
+<directory name="dictionaryreader.app-ngr" rev="7" vrev="7" srcmd5="65df5832824e8feea7384a4786225f6d">
+  <serviceinfo code="succeeded" xsrcmd5="9074f5882dc5f2fd907371f99098d814" />
+  <entry name="PKGBUILD" md5="4ab74e46b228b560859f9538f58f3873" size="1172" mtime="1614258300" />
+  <entry name="_service" md5="68974a092c7b5902acf407dfcd332194" size="485" mtime="1614166817" />
+  <entry name="dictionaryreader.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1610972000" />
+</directory>

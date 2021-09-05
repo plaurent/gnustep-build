@@ -1,0 +1,34 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+_pkgname=TimeTracker
+pkgname=timetracker.app-ngr
+pkgver=1.3.14.1
+pkgrel=1
+pkgdesc='A simple time tracking app.'
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url='https://github.com/Letterus/app-time-tracker'
+license=('GPLv2')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base'
+        'gnustep-ngr-gui'
+        'gnustep-ngr-back')
+makedepends=('gnustep-ngr-make' 'clang')
+provides=('timetracker.app')
+options=(debug strip)
+install="timetracker.install"
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

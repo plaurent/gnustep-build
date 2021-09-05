@@ -1,0 +1,37 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-base
+pkgver=1.27.0
+pkgrel=1
+pkgdesc="The GNUstep base package using the next generation runtime"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/"
+license=("GPL" "LGPL")
+depends=(libxslt avahi gmp openssl m4 libffi libxml2 gnutls icu tzdata gnustep-ngr-libobjc2 gnustep-ngr-libdispatch)
+makedepends=(gnustep-ngr-make clang)
+conflicts=(gnustep-base gnustep-ngr-base-git)
+options=(debug strip)
+groups=('gnustep-ngr')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd "$srcdir"/"${pkgname}-${pkgver}"
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  CC=clang CXX=clang++ LD=/usr/bin/ld.gold RUNTIME_VERSION=gnustep-2.0 LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/GNUstep/System/Library/Libraries:/usr/lib -I/usr/GNUstep/System/Library/Headers:/usr/includes -no-pie" OBJCFLAGS="-fblocks" CPPFLAGS='-I/usr/GNUstep/System/Library/Headers:/usr/includes' ./configure  \
+	--prefix=/usr/GNUstep --sysconfdir=/etc/GNUstep \
+	--with-ffi-include=/usr/lib/libffi-`pacman -Q libffi | cut -f2 -d\ |cut -f1 -d-`/include/
+  # fix file ownership
+  sed -i 's/tar -xf $(TIMEZONE_ARCHIVE);/tar -xf $(TIMEZONE_ARCHIVE);chown -R root:root * ;/' NSTimeZones/Makefile.postamble
+  sed -i 's|.*gnutls_transport_set_lowat.*||' Source/GSSocketStream.m
+  make debug=yes
+}
+
+package() {
+  cd "$srcdir"/"${pkgname}-${pkgver}"
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  chown -R root.root "$pkgdir/"
+}

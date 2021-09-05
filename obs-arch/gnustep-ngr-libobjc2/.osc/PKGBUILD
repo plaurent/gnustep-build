@@ -1,0 +1,35 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+pkgname='gnustep-ngr-libobjc2'
+pkgver=2.1
+pkgrel=1
+pkgdesc='Objective-C runtime library intended for use with Clang. This is the next generation runtime of the GNUstep project (ngr).'
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url=https://github.com/gnustep/libobjc2
+groups=('gnustep-ngr')
+license=(MIT)
+depends=()
+makedepends=(git binutils 'clang>=8.0.0' cmake)
+conflicts=(gcc-objc libblocksruntime gnustep-ngr-libobjc2-git)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build () {
+    source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+	PATH=$PATH:/usr/GNUstep/System/Tools/ CC=clang CXX=clang++ LD=/usr/bin/ld.gold LDFLAGS="-fuse-ld=/usr/bin/ld.gold" RUNTIME_VERSION=gnustep-2.0 cmake -S"${pkgname}-${pkgver}" \
+	-B build \
+	-DBUILD_STATIC_LIBOBJC=1 \
+	-DGNUSTEP_INSTALL_TYPE='SYSTEM' \
+	-DCMAKE_BUILD_TYPE='Release' \
+	-DCMAKE_LIBRARY_PATH=/usr/lib \
+	-DCMAKE_INSTALL_LIBDIR=/usr/GNUstep/lib \
+	-DCMAKE_INSTALL_PREFIX=/usr/GNUstep \
+    -DCMAKE_C_COMPILER=${CC} \
+    -DCMAKE_CXX_COMPILER=${CXX} \
+    -DCMAKE_LINKER=${LD} \
+    -DCMAKE_MODULE_LINKER_FLAGS="${LDFLAGS}"
+	make -C build
+}
+
+package () {
+	DESTDIR="${pkgdir}" make -C build install
+}

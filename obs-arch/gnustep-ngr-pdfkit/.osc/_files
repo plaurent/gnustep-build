@@ -1,0 +1,5 @@
+<directory name="gnustep-ngr-pdfkit" rev="10" vrev="10" srcmd5="694343fe40419821f6b559768bde1ec9">
+  <serviceinfo code="succeeded" xsrcmd5="68c372cdd4a2769c32b6226bae489d72" />
+  <entry name="PKGBUILD" md5="08618812a726d86744f74999f01fd2bc" size="871" mtime="1614269786" />
+  <entry name="_service" md5="ca33a19e46b292595ab4f306a55d84cf" size="487" mtime="1614166394" />
+</directory>

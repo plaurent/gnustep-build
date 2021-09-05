@@ -1,0 +1,6 @@
+<directory name="timetracker.app-ngr" rev="11" vrev="11" srcmd5="39ea163ff9509478306890633d42cba8">
+  <serviceinfo code="succeeded" xsrcmd5="c3e0e253c7c2c6fc55229f75e3ddbebd" />
+  <entry name="PKGBUILD" md5="7c10724573645855506485389829a295" size="1127" mtime="1614258280" />
+  <entry name="_service" md5="ad9ed656a15b4d8a8e40fd1f6133cd06" size="483" mtime="1614166797" />
+  <entry name="timetracker.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1610974786" />
+</directory>

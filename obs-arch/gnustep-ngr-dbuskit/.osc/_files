@@ -1,0 +1,5 @@
+<directory name="gnustep-ngr-dbuskit" rev="13" vrev="13" srcmd5="e77affd26c4a322b38e893ee7f18affc">
+  <serviceinfo code="succeeded" xsrcmd5="4d111c54cd0e1a9f411410ce21611d38" />
+  <entry name="PKGBUILD" md5="3fc89e71df6fa0de5a19df9d815060d6" size="1003" mtime="1614278536" />
+  <entry name="_service" md5="a7295ca5887f48c43d79f22299174d06" size="477" mtime="1614166610" />
+</directory>

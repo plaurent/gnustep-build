@@ -1,0 +1,6 @@
+<package name="grr.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>Grr.app</title>
+  <description>GÃ¼nther's Rss Reader is a RSS reader for GNUstep and Macintosh.</description>
+  <url>https://www.nongnu.org/gap/grr/index.html</url>
+</package>
+

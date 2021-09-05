@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-librenaissance" project="home:letterus:gnustep-ngr">
+  <title>GNUstep Renaissance Library</title>
+  <description>A development framework which runs on top of the GNUstep libraries or on top of the Apple Mac OS X Cocoa frameworks, providing an opaque layer to write portable applications.</description>
+</package>
+

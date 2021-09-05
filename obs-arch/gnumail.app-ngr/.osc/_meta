@@ -1,0 +1,5 @@
+<package name="gnumail.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>GNUMail</title>
+  <description>A mailclient built using GNUstep and a clone of NeXT Mail.app</description>
+</package>
+

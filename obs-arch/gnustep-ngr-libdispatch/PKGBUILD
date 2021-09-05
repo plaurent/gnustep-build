@@ -1,0 +1,49 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+pkgname=gnustep-ngr-libdispatch
+pkgver=5.3.0
+pkgrel=1
+pkgdesc='Comprehensive support for concurrent code execution on multicore hardware'
+groups=('gnustep-ngr')
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url=https://apple.github.io/swift-corelibs-libdispatch
+license=(Apache)
+depends=()
+makedepends=(git clang cmake)
+conflicts=(libdispatch libdispatch-git swift swift-development gnustep-ngr-libdispatch-git)
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz"
+        remove-werror.patch
+        avoid-libkqueue.patch)
+sha512sums=('SKIP'
+            'd7d05ff6fa2ece40fea51e97f1af04e25ae9c2b55246fa2d753c446cff380262e611f9abb5112b7c7c94730362f0d06e0ccd867477c9470d1154e9c65e540529'
+            '9f954538eee6ca63170c9fcf28cbcc090392360157c03bb33783789182102854ab344b432ff9f5603b873cb2540ffecf83458be559757eb094286cb41d9ba9ea')
+
+prepare () {
+    cd "${pkgname}-${pkgver}"
+	patch -p0 < "${srcdir}/remove-werror.patch"
+	patch -p0 < "${srcdir}/avoid-libkqueue.patch"
+}
+
+build () {
+    CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+    CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+	CC=clang CXX=clang++ cmake -S"${pkgname}-${pkgver}" -Bbuild \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_SKIP_RPATH=ON \
+		-DCMAKE_BUILD_TYPE='None' \
+		-DCMAKE_INSTALL_PREFIX=/usr/GNUstep \
+		-DCMAKE_INSTALL_LIBDIR=/usr/GNUstep/System/Library/Libraries/ \
+		-DCMAKE_INSTALL_MANDIR=/usr/GNUstep/System/Library/Documentation/man/ \
+		-DINSTALL_DISPATCH_HEADERS_DIR=/usr/GNUstep/System/Library/Headers/dispatch \
+		-DINSTALL_BLOCK_HEADERS_DIR=/usr/GNUstep/System/Library/Headers/block \
+		-DINSTALL_OS_HEADERS_DIR=/usr/GNUstep/System/Library/Headers/os \
+		-DINSTALL_PRIVATE_HEADERS=YES
+	make -C build
+}
+
+package () {
+	DESTDIR="${pkgdir}" make -C build install
+	# Duplicate to headers of libobjc2
+	rm ${pkgdir}/usr/GNUstep/System/Library/Headers/block/Block.h
+	rm ${pkgdir}/usr/GNUstep/System/Library/Headers/block/Block_private.h
+}

@@ -1,0 +1,6 @@
+<directory name="talksoup.app-ngr" rev="1" vrev="1" srcmd5="72aa26691459d4bcb5fc54dd139b86f5">
+  <serviceinfo code="succeeded" xsrcmd5="fa01e260a468bf58eed2a2553fdcb952" />
+  <entry name="PKGBUILD" md5="0dea41950ecd9c2e42fed17cccaa0892" size="1144" mtime="1614977434" />
+  <entry name="_service" md5="4a955ba138c9372b6242732db87debb6" size="490" mtime="1614977434" />
+  <entry name="talksoup.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1614977434" />
+</directory>

@@ -1,0 +1,5 @@
+<package name="fisicalab.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>GNU FÃ­sicaLab</title>
+  <description>FisicaLab (can be pronounced as PhysicsLab) is an educational application to solve physics problems. Its main objective is let the user to focus in physics concepts, leaving aside the mathematical details (FisicaLab take care of them).</description>
+</package>
+

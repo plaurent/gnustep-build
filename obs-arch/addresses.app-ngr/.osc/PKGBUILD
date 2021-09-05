@@ -1,0 +1,33 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=addresses.app-ngr
+_pkgname=AddressManager
+pkgver=0.4.8
+pkgrel=1
+pkgdesc="A versatile Address Book application and framework."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.nongnu.org/gap/addresses/index.html"
+license=('GPL')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back')
+makedepends=('gnustep-ngr-make' clang)
+provides=('addresses.app')
+conflicts=('addresses.app' 'addresses.app-ngr-svn')
+options=(debug strip)
+install="addresses.install"
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

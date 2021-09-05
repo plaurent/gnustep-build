@@ -1,0 +1,5 @@
+<directory name="rsskit-ngr" rev="9" vrev="9" srcmd5="4f0873930dd221baf96300e7355d17e4">
+  <serviceinfo code="succeeded" xsrcmd5="4529df0bc28b68815e96b72a5d37c8c7" />
+  <entry name="PKGBUILD" md5="e1e4a88a5dc9839c8ce439fbe76dc91b" size="826" mtime="1614258242" />
+  <entry name="_service" md5="4d704a39dbe04edd9943260a4e583813" size="479" mtime="1614166746" />
+</directory>

@@ -1,0 +1,8 @@
+<package name="gnustep-ngr-libdispatch" project="home:letterus:gnustep-ngr">
+  <title>libdispatch, GNUstep build</title>
+  <description>Comprehensive support for concurrent code execution on multicore hardware.</description>
+  <build>
+    <enable arch="aarch64"/>
+  </build>
+</package>
+

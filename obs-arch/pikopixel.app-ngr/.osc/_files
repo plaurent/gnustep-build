@@ -1,0 +1,7 @@
+<directory name="pikopixel.app-ngr" rev="2" vrev="2" srcmd5="047cabea97885f0e9a7dd172bb77cfb7">
+  <serviceinfo code="succeeded" xsrcmd5="48d54078ebe7c5f16ac30578ddac5a7e" />
+  <entry name="GNUmakefile.patch" md5="5b675bf8e32e6bd6183395a104845a5f" size="359" mtime="1614979214" />
+  <entry name="PKGBUILD" md5="c0d149809e8f9b1431a9129705c8907f" size="1589" mtime="1614980222" />
+  <entry name="_service" md5="95999e14fe0fb5b62105622702e99724" size="225" mtime="1614979214" />
+  <entry name="pikopixel.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1614979214" />
+</directory>

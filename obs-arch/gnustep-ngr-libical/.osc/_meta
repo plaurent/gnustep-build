@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-libical" project="home:letterus:gnustep-ngr">
+  <title>Libical</title>
+  <description>An implementation of iCalendar protocols and data formats</description>
+</package>
+

@@ -1,0 +1,122 @@
+Index: configure.ac
+===================================================================
+--- configure.ac	(Revision 843)
++++ configure.ac	(Arbeitskopie)
+@@ -3,7 +3,8 @@
+ 
+ AC_CONDITIONAL
+ AC_PREREQ([2.68])
+-AC_INIT(fisicalab, 0.3.4)
++AC_INIT(fisicalab, 0.3.5)
++AC_LANG(Objective C)
+ #AC_CANONICAL_HOST
+ 
+ # Check if we are in Mac OS
+@@ -29,17 +30,29 @@
+ 
+ AC_CONFIG_AUX_DIR([$GNUSTEP_MAKEFILES])
+ 
+-OBJC_FLAGS=`gnustep-config --objc-flags 2>&5`
+ GSL_PREFIX=`gsl-config --prefix 2>&5`
+ GNUSTEP_LOCAL_LIBRARIES=`gnustep-config --variable=GNUSTEP_LOCAL_LIBRARIES 2>&5`
+ GNUSTEP_SYSTEM_LIBRARIES=`gnustep-config --variable=GNUSTEP_SYSTEM_LIBRARIES 2>&5`
+ 
+-CPPFLAGS="$CPPFLAGS -x objective-c $OBJC_FLAGS"
+-LDFLAGS="$LDFLAGS -L$GSL_PREFIX/lib -L$GNUSTEP_LOCAL_LIBRARIES -L$GNUSTEP_SYSTEM_LIBRARIES"
++# Check compiler
++if test "$CC" = ""; then
++  CC=`gnustep-config --variable=CC`
++fi
++if test "$CPP" = ""; then
++  CPP=`gnustep-config --variable=CPP`
++fi
++if test "$CXX" = ""; then
++  CXX=`gnustep-config --variable=CXX`
++fi
+ 
+-# Checks for programs.
+-AC_PROG_CC
++LDFLAGS=`gnustep-config --variable=LDFLAGS`
++CPPFLAGS=`gnustep-config --variable=CPPFLAGS`
++OBJCFLAGS=`gnustep-config --objc-flags`
+ 
++AC_PROG_CC($CC)
++AC_PROG_CPP($CPP)
++AC_PROG_OBJC($CPP)
++
+ # Chech for GUI option
+ build_mac=no
+ IUP=yes
+@@ -66,7 +79,7 @@
+             [])
+ 
+ # Pass the conditionals to automake
+-AM_CONDITIONAL([MACOS], [test "$build_mac" = "yes"])
++#AM_CONDITIONAL([MACOS], [test "$build_mac" = "yes"])
+ 
+ if test $RENAISSANCE = yes; then
+    AC_SUBST(IUP,"no")
+@@ -78,7 +91,7 @@
+ GUI=yes
+ GSL=yes
+ 
+-AC_CHECK_LIB(gnustep-base,main,[],BASE=no)
++#AC_CHECK_LIB(gnustep-base,main,[],BASE=no)
+ 
+ if test $RENAISSANCE = yes; then
+     AC_SUBST(GORM,[])
+@@ -108,7 +121,7 @@
+       AC_SUBST(RENUI,[])
+       AC_SUBST(MACOS,[])
+    else
+-      AC_CHECK_LIB(gnustep-gui,main,[],GUI=no)
++      #AC_CHECK_LIB(gnustep-gui,main,[],GUI=no)
+       AC_SUBST(GORM,"Fisica.gorm preferences.gorm groups.gorm properties.gorm firstLaunchPanel.gorm staticRigidBodies.gorm dynamicsCircular.gorm thermodynamics.gorm")
+       AC_SUBST(MAIN_NIB,"NSMainNibFile = Fisica.gorm;")
+       AC_SUBST(GSMARKUP, [])
+@@ -139,14 +152,6 @@
+    else
+       if test $GUI = no; then
+          AC_MSG_ERROR([`fisicalab requires the library gnustep-gui.']);
+-      else
+-         GUI_VERSION=`grep --recursive --no-filename GSBundleShortVersionString /usr/GNUstep/Local/Library/Libraries/gnustep-gui/Versions/`
+-         GUI_VERSION=${GUI_VERSION#*.}
+-         GUI_VERSION=${GUI_VERSION%.*}
+-
+-         if test [$GUI_VERSION -lt 23]; then
+-            AC_MSG_ERROR([`fisicalab requires at least gnustep-gui 0.23.0.']);
+-         fi
+       fi
+    fi
+ fi
+@@ -153,18 +158,18 @@
+ 
+ # Checks for header files.
+ AC_CHECK_HEADER([Foundation/Foundation.h], [],
+-[AC_MSG_ERROR([You should install the header files for pachage gnustep-base.])])
++[AC_MSG_ERROR([You should install the header files for package gnustep-base.])])
+ 
+ if test $IUP = yes; then
+    AC_CHECK_HEADER([iup/iup.h], [],
+-   [AC_MSG_ERROR([You should install the header files for pachage IUP.])])
++   [AC_MSG_ERROR([You should install the header files for package IUP.])])
+ else
+    AC_CHECK_HEADER([AppKit/AppKit.h], [],
+-   [AC_MSG_ERROR([You should install the header files for pachage gnustep-gui.])])
++   [AC_MSG_ERROR([You should install the header files for package gnustep-gui.])])
+    
+    if test $RENAISSANCE = yes; then
+       AC_CHECK_HEADER([Renaissance/Renaissance.h], [],
+-      [AC_MSG_ERROR([You should install the header files for pachage Renaissance.])])
++      [AC_MSG_ERROR([You should install the header files for package Renaissance.])])
+    fi
+ 
+ fi
+@@ -192,6 +197,7 @@
+    AC_MSG_ERROR([`fisicalab requires the library gnustep-baseadd.']);
+ fi
+ 
++AC_LANG(C)
+ AC_CHECK_LIB(m,main,[],GSL=no)
+ AC_CHECK_LIB(gslcblas,main,[],GSL=no)
+ AC_CHECK_LIB(gsl,main,[],GSL=no)

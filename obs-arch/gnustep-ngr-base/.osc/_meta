@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-base" project="home:letterus:gnustep-ngr">
+  <title>GNUstep Base Package</title>
+  <description>The GNUstep base package using the next generation runtime and libdispatch, thus providing the Foundation framework including blocks</description>
+</package>
+

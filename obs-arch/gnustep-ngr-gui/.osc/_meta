@@ -1,0 +1,5 @@
+<package name="gnustep-ngr-gui" project="home:letterus:gnustep-ngr">
+  <title>GNUstep GUI class library</title>
+  <description>Provides the AppKit framework using the next generation objc runtime (libobjc2)</description>
+</package>
+

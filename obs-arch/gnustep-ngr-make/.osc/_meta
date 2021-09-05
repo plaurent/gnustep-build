@@ -1,0 +1,6 @@
+<package name="gnustep-ngr-make" project="home:letterus:gnustep-ngr">
+  <title>GNUstep Make</title>
+  <description>The GNUstep make package using the next generation runtime</description>
+  <url>http://www.gnustep.org/</url>
+</package>
+

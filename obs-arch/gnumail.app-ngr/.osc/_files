@@ -1,0 +1,6 @@
+<directory name="gnumail.app-ngr" rev="9" vrev="9" srcmd5="b7c89a22f7e64bbbae15f8daaa5f693e">
+  <serviceinfo code="succeeded" xsrcmd5="7e88b6c9834c78a530a2906b3bb4d880" />
+  <entry name="PKGBUILD" md5="524b1581692f35065ac5a832e8580269" size="1249" mtime="1614258086" />
+  <entry name="_service" md5="f6c394f5c2a9d82a1d3e1a4ed22aa240" size="490" mtime="1614166553" />
+  <entry name="gnumail.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1606684922" />
+</directory>

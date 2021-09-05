@@ -1,0 +1,6 @@
+<directory name="gnustep-ngr-thematic" rev="5" vrev="5" srcmd5="3cf971f69094209eade08107b17dc17c">
+  <serviceinfo code="succeeded" xsrcmd5="e372c547676fd184b61817cedf119f61" />
+  <entry name="PKGBUILD" md5="3a6c9563cdbc1b7bd51c3a0dd272e651" size="1135" mtime="1614258204" />
+  <entry name="_service" md5="870c351fa45da659b2131d3fe35e00f0" size="477" mtime="1614166706" />
+  <entry name="thematic.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1609532733" />
+</directory>

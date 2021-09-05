@@ -1,0 +1,14 @@
+<services>
+  <service name="tar_scm">
+    <param name="scm">svn</param>
+    <param name="url">http://svn.savannah.nongnu.org/svn/gap/trunk/libs/RSSKit/</param>
+    <param name="versionformat">svn~%r</param>
+    <param name="versionprefix">0.6.1.2</param>
+    <param name="filename">rsskit-ngr</param>
+  </service>
+  <service name="recompress">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service name="set_version"/>
+</services>

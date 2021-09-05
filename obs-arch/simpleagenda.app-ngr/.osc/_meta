@@ -1,0 +1,6 @@
+<package name="simpleagenda.app-ngr" project="home:letterus:gnustep-ngr">
+  <title>SimpleAgenda</title>
+  <description>SimpleAgenda is an easy to use agenda and calendar application supporting 
+events/appointments and tasks.</description>
+</package>
+

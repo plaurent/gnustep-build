@@ -1,0 +1,14 @@
+<services>
+  <service name="tar_scm">
+    <param name="scm">svn</param>
+    <param name="url">http://svn.savannah.nongnu.org/svn/gap/trunk/libs/PDFKit/</param>
+    <param name="versionformat">svn~%r</param>
+    <param name="versionprefix">1.0.1.6</param>
+    <param name="filename">gnustep-ngr-pdfkit</param>
+  </service>
+  <service name="recompress">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service name="set_version"/>
+</services>

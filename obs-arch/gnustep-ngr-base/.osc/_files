@@ -1,0 +1,5 @@
+<directory name="gnustep-ngr-base" rev="19" vrev="19" srcmd5="5418832370c6421fd9ceda116a7568ce">
+  <serviceinfo code="succeeded" xsrcmd5="16c26bfddb4fb9000f61b36c789d6ba2" />
+  <entry name="PKGBUILD" md5="7375fceff883bf08ad483a883766e6df" size="1692" mtime="1614281398" />
+  <entry name="_service" md5="13d3b4afa0cb476dc3e06588dd3441d4" size="473" mtime="1616948050" />
+</directory>

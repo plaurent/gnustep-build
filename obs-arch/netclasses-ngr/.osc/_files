@@ -1,0 +1,5 @@
+<directory name="netclasses-ngr" rev="2" vrev="2" srcmd5="901378091482877b630e2cba5373eea4">
+  <serviceinfo code="succeeded" xsrcmd5="2053eb6e5488a737480254b1b63b0db3" />
+  <entry name="PKGBUILD" md5="b2830cdc12445a976fe1cc43e6d7b763" size="958" mtime="1614977894" />
+  <entry name="_service" md5="0e132db82bec3d0d3763ce64e796e2cd" size="485" mtime="1614977413" />
+</directory>

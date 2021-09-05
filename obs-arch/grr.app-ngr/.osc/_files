@@ -1,0 +1,6 @@
+<directory name="grr.app-ngr" rev="4" vrev="4" srcmd5="bfe8c9ac81bdb4ea8ee1316324731553">
+  <serviceinfo code="succeeded" xsrcmd5="1ac530b2541f15db0658459299609b00" />
+  <entry name="PKGBUILD" md5="8262f2cdada6c610025aee091a9c7abb" size="1144" mtime="1614258261" />
+  <entry name="_service" md5="371900f8a7c19a64a0b5118df12296d3" size="482" mtime="1614166769" />
+  <entry name="grr.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1609798125" />
+</directory>

@@ -1,0 +1,21 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=sombre.theme
+_pkgname=Sombre.theme
+pkgver=0.1
+pkgrel=1
+pkgdesc="A dark theme for GNUstep by Bertrand Dekoninck."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="https://github.com/BertrandDekoninck/Sombre"
+license=('GPLv3')
+groups=('gnustep-ngr-desktop')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back')
+makedepends=()
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+package() {
+  cd ${pkgname}-${pkgver}
+  install -d "$pkgdir/usr/GNUstep/System/Library/Themes"
+  cp -R Sombre.theme "$pkgdir/usr/GNUstep/System/Library/Themes/"
+}

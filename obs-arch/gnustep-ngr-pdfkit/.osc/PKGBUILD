@@ -1,0 +1,30 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-pdfkit
+pkgver=1.0.1
+pkgrel=2
+pkgdesc="PDFKit is a PDF rendering framework which embeds xpdf."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://gap.nongnu.org/pdfkit/index.html"
+license=('GPL')
+groups=('gnustep-ngr-gui')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui')
+makedepends=('gnustep-ngr-make' clang)
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  ./configure
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

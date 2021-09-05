@@ -1,0 +1,12 @@
+<package name="sombre-manjaro.theme" project="home:letterus:gnustep-ngr">
+  <title>SombreManjaro.theme</title>
+  <description>A dark theme for GNUstep. Author Bertrand Dekoninck 2019, modifications for Manjaro and integration of DBus menu by Johannes Brakensiek 2021.
+
+Set
+
+- NSMenuInterfaceStyle to NSMacintoshInterfaceStyle for using the global horizontal menu drawn by GNUstep.
+- NSMenuInterfaceStyle to NSWindows95InterfaceStyle for using a global menu via DBus (your DE needs to provide a corresponding widget).
+
+(f.e. by using SystemPreferences.app)</description>
+</package>
+

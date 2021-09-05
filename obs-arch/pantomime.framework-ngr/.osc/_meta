@@ -1,0 +1,5 @@
+<package name="pantomime.framework-ngr" project="home:letterus:gnustep-ngr">
+  <title>Pantomime Framework</title>
+  <description>Set of Objective-C classes that model a mail system.</description>
+</package>
+

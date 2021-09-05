@@ -1,0 +1,6 @@
+<directory name="gnustep-ngr-gworkspace" rev="14" vrev="14" srcmd5="0d78bcbf7fb906e777677ffc0b1f5108">
+  <serviceinfo code="succeeded" xsrcmd5="73e28c48760ca79647175e5317f0753d" />
+  <entry name="PKGBUILD" md5="dbd72958210c5e13dbef05a086b28518" size="1422" mtime="1614272888" />
+  <entry name="_service" md5="f4ea4a214ce53f80978f842422ecf348" size="483" mtime="1614269203" />
+  <entry name="gworkspace.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1606677260" />
+</directory>

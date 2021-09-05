@@ -1,0 +1,6 @@
+<directory name="gnustep-ngr-projectcenter" rev="9" vrev="9" srcmd5="23ea80e1b16dce2180d0a819d6874d89">
+  <serviceinfo code="succeeded" xsrcmd5="ef928e0bb2ada38c26e2248e89adb91b" />
+  <entry name="PKGBUILD" md5="cf98fa25a8ef223674eec954e41432e2" size="1217" mtime="1614258007" />
+  <entry name="_service" md5="384bfc4a50b9afccc4129e8abb7e6b3c" size="489" mtime="1614166469" />
+  <entry name="projectcenter.install" md5="f7e1e2722c972f3420cfd69492c79073" size="123" mtime="1606683074" />
+</directory>

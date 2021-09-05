@@ -1,0 +1,5 @@
+<package name="rsskit-ngr" project="home:letterus:gnustep-ngr">
+  <title>RSSKit</title>
+  <description>A simple library for reading the different types of RSS file formats.</description>
+</package>
+
