@@ -1,0 +1,35 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-systempreferences
+_pkgname='SystemPreferences'
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="An application which allows to manage the settings of many aspects of the gnustep environment and its applications."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/experience/systempreferences.html"
+license=('GPL2')
+install="systempreferences.install"
+provides=('systempreferences')
+conflicts=('systempreferences' 'gnustep-ngr-systempreferences-git')
+depends=('gnustep-ngr-base'
+         'gnustep-ngr-gui'
+         'gnustep-ngr-back')
+makedepends=('gnustep-ngr-make' clang)
+options=(debug strip)
+groups=('gnustep-ngr-desktop')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

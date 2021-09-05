@@ -1,0 +1,32 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-make
+pkgver=2.8.0
+pkgrel=1
+pkgdesc="The GNUstep make package using the next generation runtime"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/"
+license=('GPL')
+depends=()
+makedepends=('clang>=8' gnustep-ngr-libobjc2 gnustep-ngr-libdispatch)
+conflicts=('gnustep-make' 'gnustep-ngr-make-git')
+groups=('gnustep-ngr')
+backup=('etc/GNUstep/GNUstep.conf')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd "$srcdir"/"${pkgname}-${pkgver}"
+  CC=clang CXX=clang++ RUNTIME_VERSION=gnustep-2.0 LD=/usr/bin/ld.gold LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/GNUstep/System/Library/Libraries:/usr/lib -I/usr/GNUstep/System/Library/Headers:/usr/includes -no-pie" OBJCFLAGS="-fblocks" CPPFLAGS='-I/usr/GNUstep/System/Library/Headers:/usr/includes' ./configure \
+  --with-layout=gnustep \
+  --enable-native-objc-exceptions \
+  --enable-objc-arc \
+  --enable-install-ld-so-conf \
+  --with-library-combo=ng-gnu-gnu
+  make
+}
+
+package() {
+  cd "$srcdir"/"${pkgname}-${pkgver}"
+  make DESTDIR="$pkgdir" install
+}

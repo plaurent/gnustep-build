@@ -1,0 +1,28 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-librenaissance
+pkgver=0.9.0
+pkgrel=0
+pkgdesc="A development framework which runs on top of the GNUstep libraries or on top of the Apple Mac OS X Cocoa frameworks, providing an opaque layer to write portable applications."
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.it/Renaissance/"
+license=('LGPL')
+groups=('gnustep-ngr-gui' 'gnustep-ngr-dev')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui')
+makedepends=('gnustep-ngr-make' 'clang')
+provides=("librenaissance")
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+    cd ${pkgname}-${pkgver}
+    source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    make debug=yes
+}
+
+package() {
+    cd ${pkgname}-${pkgver}
+    source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

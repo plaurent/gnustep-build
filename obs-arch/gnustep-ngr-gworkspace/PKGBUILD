@@ -1,0 +1,42 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+_pkgname='GWorkspace'
+pkgname=gnustep-ngr-gworkspace
+pkgver=0.9.4
+pkgrel=1
+pkgdesc="The GNUstep Workspace"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/experience/GWorkspace.html"
+license=('GPL')
+depends=(gnustep-ngr-base gnustep-ngr-gui gnustep-ngr-back gnustep-ngr-pdfkit)
+makedepends=(gnustep-ngr-make clang)
+provides=(gworkspace)
+conflicts=(gworkspace gnustep-ngr-gworkspace-git)
+replaces=(gworkspace.app-svn)
+options=(debug strip)
+install="gworkspace.install"
+backup=()
+groups=('gnustep-ngr-desktop')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  export CC=clang 
+  export CXX=clang++ 
+  export RUNTIME_VERSION=gnustep-2.0
+  export LD=/usr/bin/ld.gold
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}  
+  ./configure
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

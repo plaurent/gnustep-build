@@ -1,0 +1,34 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+_pkgname=netclasses
+pkgname=netclasses-ngr
+pkgver=1.1.0
+pkgrel=1
+pkgdesc='A small framework of asynchronous Objective-C networking classes'
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url='http://wiki.gnustep.org/index.php/Netclasses'
+license=('LGPL')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui')
+groups=('gnustep-ngr-libs')
+makedepends=('gnustep-ngr-make' 'clang')
+provides=('netclasses')
+conflicts=('netclasses')
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+  CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+  CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+  
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  ./configure
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

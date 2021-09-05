@@ -1,0 +1,29 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-libical
+pkgver=0.48
+pkgrel=2
+pkgdesc="An implementation of iCalendar protocols and data formats"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="https://github.com/libical/libical/tree/v0.48"
+license=('LGPL')
+depends=()
+makedepends=('clang')
+provides=("libical=${pkgver}")
+options=(debug strip)
+source=("libical-${pkgver}.tar.gz")
+sha256sums=('8bfdf66e4bfa2f16ac33e0d4671cdddd5d76d06076c0bea8ba9a09508f7291e1')
+
+build() {
+    cd $srcdir/libical-${pkgver}
+    CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+    CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+    CC=clang CXX=clang++ ./configure --prefix=/usr/GNUstep/ --bindir=/usr/GNUstep/System/Tools/ --libdir=/usr/GNUstep/System/Library/Libraries --includedir=/usr/GNUstep/System/Library/Headers --mandir=/usr/GNUstep/System/Library/Documentation/man --docdir=/usr/GNUstep/System/Library/Documentation/
+    make
+}
+
+package() {
+    cd $srcdir/libical-${pkgver}
+
+    make DESTDIR="$(realpath ${pkgdir})" install
+}

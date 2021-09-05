@@ -1,0 +1,30 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+_pkgname=RSSKit
+pkgname=rsskit-ngr
+pkgver=0.6.1
+pkgrel=1
+pkgdesc='A simple library for reading the different types of RSS file formats.'
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url='http://gap.nongnu.org/grr/index.html'
+license=('LGPL')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui')
+groups=('gnustep-ngr-libs')
+makedepends=('gnustep-ngr-make' 'clang')
+provides=('rsskit')
+conflicts=('rsskit')
+options=(debug strip)
+source=("${pkgname}-${pkgver}.tar.xz")
+sha512sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}

@@ -1,0 +1,33 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=talksoup.app-ngr
+_pkgname=TalkSoup
+pkgver=1.1
+pkgrel=1
+pkgdesc="An IRC client for GNUstep and Macintosh"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://gap.nongnu.org/talksoup/index.html"
+license=('GPL2')
+groups=('gnustep-ngr-apps')
+depends=('gnustep-ngr-base' 'gnustep-ngr-gui' 'gnustep-ngr-back' 'netclasses-ngr')
+makedepends=('gnustep-ngr-make' clang)
+provides=('talksoup.app')
+conflicts=('talksoup.app')
+options=(debug strip)
+install="talksoup.install"
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make debug=yes
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+  make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+  sed -i 's/Local/System/g' "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop"
+  install -Dm644 "$pkgdir/usr/GNUstep/System/Applications/$_pkgname.app/Resources/$_pkgname.desktop" "$pkgdir/usr/share/applications/$_pkgname.desktop"
+}

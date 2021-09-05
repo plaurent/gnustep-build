@@ -1,0 +1,31 @@
+# Maintainer: Johannes Brakensiek <letterus AT gnustep DOT app>
+
+pkgname=gnustep-ngr-back
+pkgver=0.28.0
+pkgrel=1
+pkgdesc="The GNUstep GUI Backend, next generation runtime version"
+arch=(i686 x86_64 arm armv6h armv7h aarch64)
+url="http://www.gnustep.org/"
+license=('LGPL')
+depends=(libgl libxmu freetype2 cairo libxrandr 'gnustep-ngr-base' 'gnustep-ngr-gui>=0.28.0')
+makedepends=('gnustep-ngr-make' 'libffi' clang)
+conflicts=('gnustep-back-svn' 'gnustep-back' 'gnustep-ngr-back-git')
+options=(debug strip)
+groups=('gnustep-ngr-gui')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+    cd ${pkgname}-${pkgver}
+    CFLAGS=${CFLAGS/-fvar-tracking-assignments}
+    CXXFLAGS=${CXXFLAGS/-fvar-tracking-assignments}
+    source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    ./configure
+    make debug=yes
+}
+
+package() {
+    cd ${pkgname}-${pkgver}
+    source /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    make DESTDIR="$pkgdir" GNUSTEP_INSTALLATION_DOMAIN=SYSTEM install
+}
