@@ -1,0 +1,14 @@
+on:
+  [push]
+name: Test libobjc2
+jobs:
+  testbuild:
+    name: Building and testing libobjc2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@master
+      - name: Execute test script
+        run: |
+          cd ubuntu-20.04-clang-10.0-runtime-2.0
+          sh ./test-libobjc2.sh
