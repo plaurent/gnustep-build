@@ -56,7 +56,7 @@ libstdc++-6-dev \
 gobjc-6 gobjc++-6 \
 gobjc++ \
 libstdc++-6-dev libstdc++-6-doc libstdc++-6-pic \
-libstdc++6 cmake xpdf libxrandr-dev
+libstdc++6 cmake xpdf libxrandr-dev libcurl4-gnutls-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -147,6 +147,16 @@ make -j8
 sudo -E make install
 
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+
+showPrompt
+
+# Build GNUstep corebase (CoreFoundation)
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep-corebase...${NC}"
+cd ../libs-corebase/
+./configure
+make -j8
+sudo -E make install
 
 showPrompt
 
