@@ -78,7 +78,7 @@ libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
 libstdc++-10-doc libstdc++-10-pic \
-cmake xpdf libxrandr-dev
+cmake xpdf libxrandr-dev libcurl4-gnutls-dev
 
 if [ "$APPS" = true ] ; then
   sudo apt -y install curl
@@ -187,6 +187,17 @@ sudo -E make install
 . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
 
 showPrompt
+
+# Build GNUstep corebase (CoreFoundation)
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep-corebase...${NC}"
+cd ../libs-corebase/
+./configure
+make -j8
+sudo -E make install
+
+showPrompt
+
 
 # Build GNUstep base
 echo -e "\n\n"
