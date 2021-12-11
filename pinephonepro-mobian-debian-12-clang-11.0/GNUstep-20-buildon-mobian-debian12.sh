@@ -120,9 +120,6 @@ cd GNUstep-build
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
-cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE
-cd ..
 
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
