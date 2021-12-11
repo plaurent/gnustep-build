@@ -121,6 +121,8 @@ if [ -x "$(command -v ${CC})" ]; then
 else
   if [ -x "$(command -v clang-9)" ]; then
     CC=clang-9
+  elif [ -x "$(command -v clang-11)" ]; then
+    CC=clang-11
   elif [ -x "$(command -v clang-8)" ]; then
     CC=clang-8
   elif [ -x "$(command -v clang-6.0)" ]; then
