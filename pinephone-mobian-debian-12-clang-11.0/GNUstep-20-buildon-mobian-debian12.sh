@@ -13,8 +13,8 @@ function showPrompt()
 }
 
 # Export compiler environment vars
-export CC=clang-9
-export CXX=clang++-9
+export CC=clang-11
+export CXX=clang++-11
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export RUNTIME_VERSION=gnustep-2.0
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -28,7 +28,7 @@ function installGNUstepMake()
   echo -e "${GREEN}Building GNUstep-make...${NC}"
   cd ../make
   make clean
-  CC=clang-9 ./configure \
+  CC=clang-11 ./configure \
     --with-layout=gnustep \
     --disable-importing-config-file \
     --enable-native-objc-exceptions \
@@ -58,7 +58,7 @@ PROMPT=false
 echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
-DEBIAN_FRONTEND=noninteractive sudo apt -y install clang-9 liblldb-9 lld-9 build-essential git subversion \
+DEBIAN_FRONTEND=noninteractive sudo apt -y install clang-11 liblldb-11 lld-11 build-essential git subversion \
 libc6 libc6-dev \
 libxml2 libxml2-dev \
 libffi8 libffi-dev \
@@ -120,9 +120,6 @@ cd GNUstep-build
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
-cd swift-corelibs-libdispatch
-  git checkout swift-5.1.1-RELEASE
-cd ..
 
 git clone https://github.com/gnustep/make
 git clone https://github.com/gnustep/libobjc2
