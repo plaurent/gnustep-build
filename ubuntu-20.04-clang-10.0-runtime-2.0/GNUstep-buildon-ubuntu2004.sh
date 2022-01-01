@@ -61,6 +61,7 @@ cd libobjc2
 cd ..
 git clone https://github.com/gnustep/tools-make.git
 git clone https://github.com/gnustep/libs-base.git
+git clone https://github.com/gnustep/libs-corebase.git
 git clone https://github.com/gnustep/libs-gui.git
 git clone https://github.com/gnustep/libs-back.git
 
@@ -156,6 +157,18 @@ cd ../libs-base/
 ./configure
 make -j8
 sudo -E make install
+
+showPrompt
+
+# Build GNUstep corebase
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep corebase...${NC}"
+cd ../corebase
+make clean
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
 
 showPrompt
 
