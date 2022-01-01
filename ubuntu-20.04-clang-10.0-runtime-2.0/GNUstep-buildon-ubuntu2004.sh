@@ -163,7 +163,7 @@ showPrompt
 # Build GNUstep corebase
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep corebase...${NC}"
-cd ../corebase
+cd ../libs-corebase
 make clean
 ./configure
 make -j8
