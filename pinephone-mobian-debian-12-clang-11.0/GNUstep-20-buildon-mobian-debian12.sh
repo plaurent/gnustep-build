@@ -105,7 +105,7 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-cmake libxrandr-dev
+cmake libxrandr-dev libcurl4-gnutls-dev
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
 
