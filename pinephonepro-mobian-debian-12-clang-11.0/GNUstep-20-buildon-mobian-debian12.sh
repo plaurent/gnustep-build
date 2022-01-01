@@ -105,7 +105,7 @@ libcairo2-dev \
 libxt-dev libssl-dev \
 libasound2-dev libjack-dev libjack0 libportaudio2 \
 libportaudiocpp0 portaudio19-dev \
-cmake libxrandr-dev
+cmake libxrandr-dev libcurl4-gnutls-dev
 
 # readline-common libreadline7 libreadline-dev cmake-curses-gui
 
@@ -129,7 +129,7 @@ cd libobjc2
   git submodule update
 cd ..
 git clone https://github.com/gnustep/base
-#git clone https://github.com/gnustep/corebase
+git clone https://github.com/gnustep/corebase
 git clone https://github.com/gnustep/gui
 git clone https://github.com/gnustep/back
 
@@ -224,14 +224,14 @@ sudo ldconfig
 showPrompt
 
 # Build GNUstep corebase
-#echo -e "\n\n"
-#echo -e "${GREEN}Building GNUstep corebase...${NC}"
-#cd ../corebase
-#make clean
-#./configure
-#make -j8
-#sudo -E make install
-#sudo ldconfig
+echo -e "\n\n"
+echo -e "${GREEN}Building GNUstep corebase...${NC}"
+cd ../corebase
+make clean
+./configure
+make -j8
+sudo -E make install
+sudo ldconfig
 
 showPrompt
 
