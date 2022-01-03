@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # Show prompt function
 function showPrompt()
 {
