@@ -162,7 +162,7 @@ showPrompt
 
 # Build GNUstep corebase
 echo -e "\n\n"
-echo -e "${GREEN}Building GNUstep corebase...${NC}"
+echo -e "${GREEN}Building GNUstep corebase (set CFLAGS)...${NC}"
 cd ../libs-corebase
 CFLAGS=`gnustep-config --objc-flags` ./configure
 make -j8
