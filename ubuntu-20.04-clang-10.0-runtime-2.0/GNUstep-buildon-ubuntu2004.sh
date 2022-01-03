@@ -50,9 +50,9 @@ export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
 git clone https://github.com/apple/swift-corelibs-libdispatch
-cd swift-corelibs-libdispatch
-  git checkout swift-5.2.2-RELEASE
-cd ..
+#cd swift-corelibs-libdispatch
+#  git checkout swift-5.2.2-RELEASE
+#cd ..
 git clone https://github.com/gnustep/libobjc2.git
 cd libobjc2
   git submodule init
@@ -164,8 +164,7 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep corebase...${NC}"
 cd ../libs-corebase
-make clean
-./configure
+CFLAGS=`gnustep-config --objc-flags` ./configure
 make -j8
 sudo -E make install
 sudo ldconfig
