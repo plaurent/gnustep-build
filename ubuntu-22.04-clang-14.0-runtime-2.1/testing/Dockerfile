@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
-apt update
-apt install tzdata
+RUN apt update
+RUN apt install tzdata
 
 RUN uname -a
 ENV TZ=America/Los_Angeles
