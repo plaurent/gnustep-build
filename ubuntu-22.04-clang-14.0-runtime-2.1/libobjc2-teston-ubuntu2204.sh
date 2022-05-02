@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt -y install clang build-essential wget git subversion cmake libffi-dev libxml2-dev \
+sudo apt -y install clang build-essential wget git subversion cmake libffi-dev libxml2-dev tzdata\
 libgnutls28-dev libicu-dev libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev autoconf libtool \
 libjpeg-dev libtiff-dev libffi-dev libcairo-dev libx11-dev libxt-dev libxft-dev
 
