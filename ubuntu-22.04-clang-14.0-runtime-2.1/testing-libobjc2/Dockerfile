@@ -6,7 +6,7 @@ RUN uname -a
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /dev/timezone
 RUN apt-get update && apt-get install -y git sudo
-RUN git clone https://github.com/sheffler/gnustep-build
+RUN git clone https://github.com/plaurent/gnustep-build
 RUN cp gnustep-build/*.sh .
 RUN cp gnustep-build/ubuntu-22.04-clang-14.0-runtime-2.1/*.sh .
 RUN cp gnustep-build/ubuntu-22.04-clang-14.0-runtime-2.1/testing/Dockerfile .
