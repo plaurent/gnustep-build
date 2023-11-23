@@ -30,18 +30,20 @@ echo -e "\n\n${GREEN}Installing dependencies...${NC}"
 
 sudo apt-get update
 sudo apt -y install clang build-essential git subversion \
-libpthread-workqueue0 libpthread-workqueue-dev \
 libxml2 libxml2-dev \
-libffi7 libffi-dev \
+libffi8 libffi-dev \
 libuuid1 uuid-dev uuid-runtime \
 libsctp1 libsctp-dev lksctp-tools \
+libavahi-core7 libavahi-core-dev \
+libavahi-client3 libavahi-client-dev \
 libavahi-common3 libavahi-common-dev libavahi-common-data \
 libgcrypt20 libgcrypt20-dev \
 libbsd0 libbsd-dev \
 util-linux-locales \
 locales-all \
 libc-dev libc++-dev libc++1 \
-libedit-dev libeditline0 libeditline-dev \
+python-dev-is-python3 swig \
+libedit-dev libedit2 libeditreadline-dev \
 binfmt-support libtinfo-dev \
 bison flex m4 wget \
 libicns1 libicns-dev \
@@ -52,10 +54,10 @@ libxmu6 libxpm4 wmaker-common \
 libgnutls30 libgnutls28-dev \
 default-libmysqlclient-dev \
 libpq-dev \
-libstdc++-10-dev \
-gobjc-10 gobjc++-10 \
+libstdc++-11-dev \
+gobjc-11 gobjc++-11 \
 gobjc++ \
-libstdc++-10-doc libstdc++-10-pic \
+libstdc++-11-doc libstdc++-11-pic \
 cmake xpdf libxrandr-dev
 
 if [ "$APPS" = true ] ; then
@@ -104,6 +106,30 @@ echo "export RUNTIME_VERSION=$RUNTIME_VERSION" >> ~/.bashrc
 
 
 showPrompt
+
+##
+## PATCH libDispatch cmake rules to fix warning/error in benchmark.c
+##
+echo -e "\n\n"
+echo -e "${GREEN}PATCHING libdispatch...${NC}"
+cd ../swift-corelibs-libdispatch
+
+patch -p1 <<"EOF"
+diff --git a/cmake/modules/DispatchCompilerWarnings.cmake b/cmake/modules/DispatchCompilerWarnings.cmake
+index 35b80f3..9b3eca3 100644
+--- a/cmake/modules/DispatchCompilerWarnings.cmake
++++ b/cmake/modules/DispatchCompilerWarnings.cmake
+@@ -64,7 +64,8 @@ else()
+   add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-used-but-marked-unused>)
+   add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-void-pointer-to-int-cast>)
+   add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-vla>)
+-
++  add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-implicit-int-float-conversion>)
++  
+   if(CMAKE_SYSTEM_NAME STREQUAL Android)
+     add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-incompatible-function-pointer-types>)
+     add_compile_options($<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:CXX>>:-Wno-implicit-function-declaration>)
+EOF
 
 ## Build libDIspatch
 echo -e "\n\n"
