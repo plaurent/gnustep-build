@@ -167,7 +167,7 @@ showPrompt
 echo -e "\n\n"
 echo -e "${GREEN}Building GNUstep corebase (set CFLAGS)...${NC}"
 cd ../libs-corebase
-CFLAGS=`gnustep-config --objc-flags` ./configure
+CPP=`gnustep-config --variable=CPP` CPPFLAGS=`gnustep-config --objc-flags` CC=`gnustep-config --variable=CC` CFLAGS=`gnustep-config --objc-flags` LDFLAGS=`gnustep-config --objc-libs` ./configure
 make -j8
 sudo -E make install
 sudo ldconfig
