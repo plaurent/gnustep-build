@@ -97,7 +97,7 @@ default-libmysqlclient-dev \
 libpq-dev \
 libgif7 libgif-dev libwings3 libwings-dev \
 libwraster-dev libwutil5 \
-libcups2-dev libicu67 libicu-dev \
+libcups2-dev \
 xorg \
 libfreetype6 libfreetype6-dev \
 libpango1.0-dev \
