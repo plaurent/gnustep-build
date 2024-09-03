@@ -51,7 +51,7 @@ export LDFLAGS="-fuse-ld=/usr/bin/ld.gold -L/usr/local/lib"
 
 # Checkout sources
 echo -e "\n\n${GREEN}Checking out sources...${NC}"
-git clone https://github.com/apple/swift-corelibs-libdispatch
+git clone --branch swift-5.10.1-RELEASE https://github.com/apple/swift-corelibs-libdispatch
 #cd swift-corelibs-libdispatch
 #  git checkout swift-5.2.2-RELEASE
 #cd ..
