@@ -11,4 +11,3 @@ Platform specific build status via Github Actions (on fresh installs of the dist
 Distribution | objc runtime | supports ARC | supports Blocks | installs clang | CI Status
 -------------|-----|-----|-----|-----|:---------
 Ubuntu 20.04 | 2.0 | yes | yes | 10.0 | [![Ubuntu 20.04 Build Status](https://github.com/plaurent/gnustep-build/actions/workflows/ub2004c10r20.yml/badge.svg)](https://github.com/plaurent/gnustep-build/actions/workflows/ub2004c10r20.yml)
-Debian 10    | 2.0 | yes | yes | 8.0 |  [![Debian 10 Build Status](https://github.com/plaurent/gnustep-build/actions/workflows/deb10c8r20.yml/badge.svg)](https://github.com/plaurent/gnustep-build/actions/workflows/deb10c8r20.yml)
